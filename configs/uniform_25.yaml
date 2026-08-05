@@ -1,0 +1,13 @@
+﻿# Control: uniform raster subsampling 25%, SDPA
+name: U3_sdpa_uniform_r25
+model_id: Qwen/Qwen2.5-VL-3B-Instruct-AWQ
+quantization: awq-int4
+attention_backend: sdpa
+token_method: uniform
+token_retention: 0.25
+contextual_ratio: 0.05      # VisionZip contextual tokens = 5% of all visual tokens (reference setting)
+min_pixels: 200704          # 256 * 28 * 28
+max_pixels: 802816          # 1024 * 28 * 28 -> at most 1024 visual tokens per image
+max_new_tokens: 32
+warmup: 5
+seed: 1234

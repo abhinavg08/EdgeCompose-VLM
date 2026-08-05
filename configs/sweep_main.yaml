@@ -1,0 +1,14 @@
+﻿# Main experiment matrix: 2 attention backends x 4 visual-token retention ratios (+ uniform controls).
+# All configs in one group share a single loaded model; attention is switched in place.
+groups:
+  main:
+    - baseline.yaml
+    - token_75.yaml
+    - token_50.yaml
+    - token_25.yaml
+    - eager_baseline.yaml
+    - eager_token_75.yaml
+    - eager_token_50.yaml
+    - eager_token_25.yaml
+    - uniform_50.yaml
+    - uniform_25.yaml

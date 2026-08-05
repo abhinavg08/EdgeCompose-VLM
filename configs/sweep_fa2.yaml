@@ -1,0 +1,7 @@
+﻿# Optional FlashAttention-2 arm (only runs if the flash_attn package is usable).
+groups:
+  fa2:
+    - fa2_baseline.yaml
+    - fa2_token_75.yaml
+    - fa2_token_50.yaml
+    - fa2_token_25.yaml
