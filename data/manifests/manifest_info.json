@@ -1,0 +1,26 @@
+{
+  "textvqa_200.jsonl": {
+    "dataset": "textvqa",
+    "n": 200,
+    "seed": 1234,
+    "ids_sha256_16": "faca1f7127c99d12"
+  },
+  "textvqa_1000.jsonl": {
+    "dataset": "textvqa",
+    "n": 1000,
+    "seed": 1234,
+    "ids_sha256_16": "7a604670258b9f94"
+  },
+  "pope_200.jsonl": {
+    "dataset": "pope",
+    "n": 200,
+    "seed": 1234,
+    "ids_sha256_16": "727e2161e08b917f"
+  },
+  "pope_1000.jsonl": {
+    "dataset": "pope",
+    "n": 1000,
+    "seed": 1234,
+    "ids_sha256_16": "8c0f8ceac8f02059"
+  }
+}
