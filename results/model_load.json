@@ -1,0 +1,8 @@
+{
+  "model_id": "Qwen/Qwen2.5-VL-3B-Instruct-AWQ",
+  "attention_backend": "sdpa",
+  "model_load_time_s": 3.2375100999999997,
+  "model_load_allocated_mb": 3250.72216796875,
+  "model_load_device_mb": 3408.0,
+  "quantization_config": "AwqConfig(quant_method=<QuantizationMethod.AWQ: 'awq'>)"
+}

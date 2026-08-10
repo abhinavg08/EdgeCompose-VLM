@@ -1,0 +1,30 @@
+{
+  "python": "3.9.24",
+  "python_executable": "python.exe",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "system_ram_gb": 15.7,
+  "torch_version": "2.7.1+cu118",
+  "torch_cuda_version": "11.8",
+  "cuda_available": true,
+  "cudnn_version": 90100,
+  "gpu_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "gpu_vram_mb": 8188,
+  "gpu_compute_capability": "8.9",
+  "gpu_sm_count": 24,
+  "transformers_version": "4.57.1",
+  "accelerate_version": "1.10.1",
+  "autoawq_version": "0.2.9",
+  "triton-windows_version": "3.3.1.post21",
+  "triton_version": null,
+  "flash-attn_version": null,
+  "nvidia-ml-py_version": "13.615.71",
+  "nvidia_driver": "560.94",
+  "gpu_power_limit_w": null,
+  "sdpa_kernels": {
+    "flash": false,
+    "mem_efficient": true,
+    "math": true
+  },
+  "flash_attn_usable": false
+}
