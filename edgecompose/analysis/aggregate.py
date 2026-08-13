@@ -87,6 +87,8 @@ def aggregate(df: pd.DataFrame) -> pd.DataFrame:
             "attention_backend": g["attention_backend"].iloc[0],
             "token_method": g["token_method"].iloc[0],
             "token_retention": float(g["token_retention"].iloc[0]),
+            "awq_dequant_threshold": int(g["awq_dequant_threshold"].fillna(1024).iloc[0])
+            if "awq_dequant_threshold" in g else 1024,
             "n": len(g),
             "n_ok": len(ok),
             "n_failed": int((g["status"] != "ok").sum()),
@@ -131,7 +133,8 @@ def aggregate(df: pd.DataFrame) -> pd.DataFrame:
         out.append(r)
     agg = pd.DataFrame(out)
     order = {"none": 0, "visionzip": 1, "uniform": 2}
-    agg["_o"] = agg["attention_backend"].map({"sdpa": 0, "eager": 1, "flash_attention_2": 2}) * 10 + agg["token_method"].map(order)
+    agg["_o"] = (agg["attention_backend"].map({"sdpa": 0, "eager": 1, "flash_attention_2": 2}) * 10
+                 + (agg["awq_dequant_threshold"] != 1024) * 5 + agg["token_method"].map(order))
     agg = agg.sort_values(["dataset", "_o", "token_retention"], ascending=[True, True, False]).drop(columns="_o")
     return agg.reset_index(drop=True)
 

@@ -23,6 +23,7 @@ import edgecompose  # noqa: F401
 import pandas as pd
 import torch
 
+from edgecompose.benchmark import apply_config
 from edgecompose.compression import build_compressor
 from edgecompose.datasets.base import load_manifest, manifest_path
 from edgecompose.models.qwen_vl import QwenVLRunner
@@ -54,7 +55,7 @@ def main() -> None:
         samples = sorted(samples, key=lambda s: -(s.load_image().size[0] * s.load_image().size[1]))[: args.k]
         imgs = [s.load_image() for s in samples]
         for c in cfgs:
-            runner.set_attention_backend(c.attention_backend)
+            apply_config(runner, c)
             comp = build_compressor(c.token_method, c.token_retention,
                                     **({"contextual_ratio": c.contextual_ratio} if c.token_method == "visionzip" else {}))
             runner.run(imgs[0], samples[0].prompt, compressor=comp, max_new_tokens=c.max_new_tokens)  # warm kernels

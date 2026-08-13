@@ -35,6 +35,7 @@ from edgecompose.evaluation.metrics import parse_yes_no, score_sample
 from edgecompose.models.qwen_vl import QwenVLRunner
 from edgecompose.profiling import memory
 from edgecompose.profiling.power import PowerMonitor
+from edgecompose.quant.awq_dispatch import set_dequant_threshold
 from edgecompose.utils import ExperimentConfig, append_jsonl, read_jsonl
 
 logger = logging.getLogger(__name__)
@@ -42,6 +43,7 @@ logger = logging.getLogger(__name__)
 RESULT_FIELDS = [
     "run_id", "timestamp", "gpu_name", "torch_version", "cuda_version", "transformers_version",
     "model_name", "quantization", "config_name", "token_method", "token_retention", "attention_backend",
+    "awq_dequant_threshold",
     "dataset", "category", "sample_id", "question", "prediction", "parsed_prediction", "ground_truth", "score",
     "num_visual_tokens_before", "num_visual_tokens_after", "num_dominant", "num_contextual", "prefill_seq_len",
     "image_grid_thw", "preprocess_ms", "vision_ms", "compress_ms", "prefill_ms", "decode_ms", "ttft_ms",
@@ -81,6 +83,13 @@ def completed_ids(path: Path, repeat: int = 0) -> set:
     return {r["sample_id"] for r in read_jsonl(path) if r.get("status") == "ok" and r.get("repeat", 0) == repeat}
 
 
+def apply_config(runner: QwenVLRunner, cfg: ExperimentConfig) -> None:
+    """Set the runtime knobs of a configuration on the shared loaded model."""
+    runner.set_attention_backend(cfg.attention_backend)
+    if cfg.quantization.startswith("awq"):
+        set_dequant_threshold(cfg.awq_dequant_threshold)
+
+
 def _compressor_for(cfg: ExperimentConfig):
     kwargs = {"contextual_ratio": cfg.contextual_ratio} if cfg.token_method == "visionzip" else {}
     return build_compressor(cfg.token_method, cfg.token_retention, **kwargs)
@@ -98,7 +107,7 @@ def run_one(
     repeat: int = 0,
 ) -> Dict:
     """Execute and score one (config, sample) query and return a result row."""
-    runner.set_attention_backend(cfg.attention_backend)
+    apply_config(runner, cfg)
     compressor = _compressor_for(cfg)
     row: Dict = {
         "run_id": run_id,
@@ -113,6 +122,7 @@ def run_one(
         "token_method": cfg.token_method,
         "token_retention": cfg.token_retention,
         "attention_backend": cfg.attention_backend,
+        "awq_dequant_threshold": cfg.awq_dequant_threshold,
         "dataset": sample.dataset,
         "category": sample.category,
         "sample_id": sample.sample_id,
@@ -203,7 +213,7 @@ def run_group(
     for ws in warmup_samples:
         img = ws.load_image()
         for c in configs:
-            runner.set_attention_backend(c.attention_backend)
+            apply_config(runner, c)
             runner.run(img, ws.prompt, compressor=_compressor_for(c), max_new_tokens=c.max_new_tokens,
                        ignore_eos=ignore_eos)
     torch.cuda.synchronize()

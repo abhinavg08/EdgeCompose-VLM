@@ -1,0 +1,24 @@
+# EdgeCompose-VLM direct dependencies (tested versions; exact env in requirements-lock.txt)
+# Python 3.9-3.11. Install torch first from the PyTorch index matching your CUDA, e.g.
+#   pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorch.org/whl/cu118
+torch==2.7.1
+torchvision==0.22.1
+transformers==4.57.1
+accelerate==1.10.1
+# AWQ kernels. AutoAWQ pins an older torch -> install with --no-deps:
+#   pip install --no-deps autoawq==0.2.9 zstandard
+autoawq==0.2.9
+zstandard
+# Triton GEMM kernels for AWQ (Windows: triton-windows; Linux: the triton bundled with torch)
+triton-windows==3.3.1.post21 ; sys_platform == "win32"
+huggingface-hub==0.36.0
+hf_xet
+datasets
+pyarrow
+numpy
+pandas
+pillow
+pyyaml
+matplotlib
+nvidia-ml-py
+pytest

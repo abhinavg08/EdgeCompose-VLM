@@ -70,6 +70,7 @@ class ExperimentConfig:
     token_method: str = "none"  # none | visionzip | uniform
     token_retention: float = 1.0
     contextual_ratio: float = 0.05  # VisionZip contextual tokens as a fraction of all visual tokens
+    awq_dequant_threshold: int = 1024  # AutoAWQ: dequant+cuBLAS when batch*seq >= this (upstream 1024)
     min_pixels: int = 256 * 28 * 28
     max_pixels: int = 1024 * 28 * 28
     max_new_tokens: int = 32
