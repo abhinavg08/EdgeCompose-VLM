@@ -1,0 +1,14 @@
+﻿# INT4 AWQ with tuned kernel dispatch (dequant+cuBLAS for batch*seq >= 64, measured crossover), VisionZip 25%, SDPA
+name: T3_sdpa_awq64_r25
+model_id: Qwen/Qwen2.5-VL-3B-Instruct-AWQ
+quantization: awq-int4
+attention_backend: sdpa
+token_method: visionzip
+token_retention: 0.25
+contextual_ratio: 0.05
+awq_dequant_threshold: 64     # upstream AutoAWQ uses 1024; 64 = crossover from scripts/awq_kernel_bench.py
+min_pixels: 200704
+max_pixels: 802816
+max_new_tokens: 32
+warmup: 5
+seed: 1234

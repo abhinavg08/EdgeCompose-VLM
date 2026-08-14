@@ -34,6 +34,13 @@ def test_missing_values_excluded():
     assert pareto_front(rows, OBJ) == [1]
 
 
+def test_per_objective_tolerance():
+    rows = [{"quality": 0.780, "latency": 1296, "mem": 10}, {"quality": 0.773, "latency": 1292, "mem": 10}]
+    assert pareto_front(rows, OBJ) == [0, 1]  # strict: a 0.3% latency win keeps row 1
+    tol = {"quality": 0.005, "latency": 0.03 * 1296, "mem": 0.0}
+    assert pareto_front(rows, OBJ, tol=tol) == [0]  # noise-aware: row 0 dominates
+
+
 def test_tolerance_treats_near_ties_as_equal():
     rows = [{"quality": 0.800, "latency": 100, "mem": 10}, {"quality": 0.801, "latency": 100, "mem": 10}]
     assert pareto_front(rows, OBJ) == [1]

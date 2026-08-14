@@ -1,0 +1,20 @@
+﻿# Final experiment matrix (14 configs, one model load, interleaved per sample):
+#   token retention {100,75,50,25}% x {SDPA, eager} attention  (upstream AWQ dispatch)
+#   token retention {100,75,50,25}% x SDPA with tuned AWQ dispatch (threshold 64)
+#   uniform-subsampling controls at 50/25% (SDPA, upstream dispatch)
+groups:
+  final:
+    - baseline.yaml
+    - token_75.yaml
+    - token_50.yaml
+    - token_25.yaml
+    - eager_baseline.yaml
+    - eager_token_75.yaml
+    - eager_token_50.yaml
+    - eager_token_25.yaml
+    - tuned_baseline.yaml
+    - tuned_token_75.yaml
+    - tuned_token_50.yaml
+    - tuned_token_25.yaml
+    - uniform_50.yaml
+    - uniform_25.yaml
