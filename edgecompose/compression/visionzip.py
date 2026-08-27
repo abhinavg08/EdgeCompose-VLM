@@ -109,6 +109,7 @@ def attention_importance_and_keys(
     window_index: torch.Tensor,
     merge_unit: int = 4,
     scale: Optional[float] = None,
+    segments: Optional[list] = None,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """VisionZip statistics from a full-attention vision block.
 
@@ -116,18 +117,22 @@ def attention_importance_and_keys(
         q, k: RoPE-rotated query/key tensors ``[S, H, d]`` in the encoder's *window* order.
         window_index: permutation used by Qwen2.5-VL to go raster->window order for merged tokens.
         merge_unit: patches per LLM token (2x2 = 4).
+        segments: optional ``[(start, end), ...]`` patch ranges (window order) of individual
+            images; attention is computed within each segment only (the full-attention block's
+            ``cu_seqlens`` do the same). Default: one segment spanning all patches.
     Returns:
         importance ``[N]`` and keys ``[N, d]`` in raster order (N = S / merge_unit).
     """
     s, h, d = q.shape
     scale = scale if scale is not None else d**-0.5
     col_sum = torch.zeros(s, dtype=torch.float32, device=q.device)
-    # One head at a time keeps the S x S matrix at <= 64 MB for S = 4096 patches.
-    for hh in range(h):
-        logits = (q[:, hh, :] @ k[:, hh, :].T).float() * scale
-        attn = torch.softmax(logits, dim=-1)
-        col_sum += attn.sum(dim=0)
-        del logits, attn
+    for a, b in (segments or [(0, s)]):
+        # One head at a time keeps the S x S matrix at <= 64 MB for S = 4096 patches.
+        for hh in range(h):
+            logits = (q[a:b, hh, :] @ k[a:b, hh, :].T).float() * scale
+            attn = torch.softmax(logits, dim=-1)
+            col_sum[a:b] += attn.sum(dim=0)
+            del logits, attn
     importance_patch = col_sum / h  # mean over heads, summed over queries
     importance_w = importance_patch.view(s // merge_unit, merge_unit).mean(dim=-1)
     keys_w = k.float().view(s // merge_unit, merge_unit, h, d).mean(dim=1).mean(dim=1)  # [N, d]

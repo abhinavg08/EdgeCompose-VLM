@@ -228,8 +228,8 @@ def fig_interaction_heatmap(inter: pd.DataFrame, out: Path) -> None:
         inter = inter.assign(factor_B="SDPA (vs eager)")
     factors = list(dict.fromkeys(inter["factor_B"]))
     lim = max(0.05, float(np.nanmax(np.abs(inter["I"].values))))
-    fig, axes = plt.subplots(len(factors), len(dsets), figsize=(5.2 * len(dsets), 2.5 * len(factors) + 0.6),
-                             squeeze=False)
+    fig, axes = plt.subplots(len(factors), len(dsets), figsize=(5.2 * len(dsets), 2.9 * len(factors) + 0.6),
+                             squeeze=False, gridspec_kw={"hspace": 0.45})
     im = None
     for fi, fb in enumerate(factors):
         for ax, ds in zip(axes[fi], dsets):
@@ -252,7 +252,8 @@ def fig_interaction_heatmap(inter: pd.DataFrame, out: Path) -> None:
                     ax.text(j, i, f"{pv.values[i, j]:+.3f}{sig}", ha="center", va="center", fontsize=8, color=INK)
             ax.set_title(f"{DS_TITLE.get(ds, ds).split(' (')[0]} | B = {fb}", loc="left", fontsize=9.5)
             ax.set_ylabel("A: VisionZip retention")
-    fig.colorbar(im, ax=axes.ravel().tolist(), shrink=0.8, label="I = R_AB - R_A R_B  (<0 synergy, >0 interference)")
+    cb = fig.colorbar(im, ax=axes.ravel().tolist(), shrink=0.75, fraction=0.03, pad=0.03)
+    cb.set_label("I  (<0 synergy, >0 interference)", fontsize=8)
     fig.suptitle("Figure 7 - Composition interaction of token compression (A) with attention / AWQ dispatch (B)",
                  x=0.01, ha="left", fontsize=11.5, fontweight="bold", y=1.0)
     fig.text(0.01, -0.03, "* = 95% paired-bootstrap CI of I excludes 0. Baseline = the arm without B at 100% tokens "

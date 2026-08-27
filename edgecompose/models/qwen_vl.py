@@ -55,6 +55,9 @@ class InferenceOutput:
     prefill_seq_len: int
     image_grid_thw: List[int]
     token_ids: List[int] = field(default_factory=list)
+    per_image_tokens_before: List[int] = field(default_factory=list)
+    per_image_tokens_after: List[int] = field(default_factory=list)
+    candidate_logprobs: Dict[str, float] = field(default_factory=dict)
 
     @property
     def decode_steps(self) -> int:
@@ -168,6 +171,8 @@ class QwenVLRunner:
             self._capture.clear()
 
     def _visionzip_stats(self, grid_thw: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        """VisionZip statistics for all images; attention is computed *within* each image,
+        matching the full-attention block (whose cu_seqlens separate images)."""
         from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import apply_rotary_pos_emb_vision
 
         attn = self.visual.blocks[self._capture_block].attn
@@ -177,7 +182,13 @@ class QwenVLRunner:
         cos, sin = self._capture.position_embeddings
         q, k = apply_rotary_pos_emb_vision(q, k, cos, sin)
         window_index, _ = self.visual.get_window_index(grid_thw)
-        imp, keys = attention_importance_and_keys(q, k, window_index, self.visual.spatial_merge_unit, attn.scaling)
+        patches = (grid_thw[:, 0] * grid_thw[:, 1] * grid_thw[:, 2]).tolist()  # per image, contiguous in window order
+        bounds, start = [], 0
+        for n in patches:
+            bounds.append((start, start + int(n)))
+            start += int(n)
+        imp, keys = attention_importance_and_keys(q, k, window_index, self.visual.spatial_merge_unit, attn.scaling,
+                                                  segments=bounds)
         self._capture.clear()
         return imp, keys
 
@@ -192,14 +203,41 @@ class QwenVLRunner:
         ignore_eos: bool = False,
     ) -> InferenceOutput:
         """Answer one question about one image, returning text and per-stage timings."""
+        content = [{"type": "image"}, {"type": "text", "text": question}]
+        return self.run_images([image], content, compressor=compressor, max_new_tokens=max_new_tokens,
+                               ignore_eos=ignore_eos)
+
+    @torch.inference_mode()
+    def run_images(
+        self,
+        images: List[Image.Image],
+        content: List[Dict[str, Any]],
+        compressor: Optional[TokenCompressor] = None,
+        max_new_tokens: int = 32,
+        ignore_eos: bool = False,
+        compress_image_mask: Optional[List[bool]] = None,
+        score_candidates: Optional[Dict[str, str]] = None,
+    ) -> InferenceOutput:
+        """General multi-image query (batch size 1).
+
+        Args:
+            images: images in the order their ``{"type": "image"}`` placeholders appear in ``content``.
+            content: chat-message content list (interleaved text and image placeholders).
+            compressor: applied independently to every image (same retention per image).
+            compress_image_mask: optional per-image flags; False keeps that image uncompressed.
+            score_candidates: optional {label: text}; after generation, the exact log-probability
+                of each candidate continuation is computed by teacher forcing on the prompt's KV
+                cache (timed separately as ``score`` and excluded from latency/TTFT).
+        """
         compressor = compressor or NoCompression()
         use_capture = compressor.needs_attention and not compressor.is_identity()
         self._set_capture(use_capture)
         timer = StageTimer()
 
         with timer.stage("preprocess"):
-            text = self.build_prompt(question)
-            inputs = self.processor(text=[text], images=[image], return_tensors="pt")
+            messages = [{"role": "user", "content": content}]
+            text = self.processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+            inputs = self.processor(text=[text], images=list(images), return_tensors="pt")
             input_ids = inputs["input_ids"].to(self.device, non_blocking=True)
             pixel_values = inputs["pixel_values"].to(self.device, dtype=self.visual.dtype, non_blocking=True)
             grid_thw = inputs["image_grid_thw"].to(self.device)
@@ -215,14 +253,33 @@ class QwenVLRunner:
             n_before = int(image_slots.numel())
             if n_before != image_embeds.shape[0]:
                 raise RuntimeError(f"image token/feature mismatch: {n_before} vs {image_embeds.shape[0]}")
-            feats = VisionFeatures(embeds=image_embeds.to(embeds.dtype), grid_thw=grid_thw)
+            image_embeds = image_embeds.to(embeds.dtype)
+            importance = keys = None
             if use_capture:
-                feats.importance, feats.keys = self._visionzip_stats(grid_thw)
-            result = compressor.compress(feats)
+                importance, keys = self._visionzip_stats(grid_thw)
+            merge = self.visual.spatial_merge_size ** 2
+            per_image = [int(n) // merge for n in (grid_thw[:, 0] * grid_thw[:, 1] * grid_thw[:, 2]).tolist()]
+            keep_idx, keep_emb, per_after = [], [], []
+            n_dom = n_ctx = 0
+            off = 0
+            for i, n in enumerate(per_image):
+                sl = slice(off, off + n)
+                feats = VisionFeatures(embeds=image_embeds[sl], grid_thw=grid_thw[i:i + 1],
+                                       importance=None if importance is None else importance[sl],
+                                       keys=None if keys is None else keys[sl])
+                comp = compressor if (compress_image_mask is None or compress_image_mask[i]) else NoCompression()
+                res = comp.compress(feats)
+                keep_idx.append(res.keep_indices + off)
+                keep_emb.append(res.embeds)
+                per_after.append(int(res.keep_indices.numel()))
+                n_dom += res.num_dominant
+                n_ctx += res.num_contextual
+                off += n
+            keep_idx_t = torch.cat(keep_idx)
             keep = torch.ones(input_ids.shape[1], dtype=torch.bool, device=self.device)
             keep[image_slots] = False
-            keep[image_slots[result.keep_indices]] = True
-            embeds[0, image_slots[result.keep_indices]] = result.embeds
+            keep[image_slots[keep_idx_t]] = True
+            embeds[0, image_slots[keep_idx_t]] = torch.cat(keep_emb)
             embeds = embeds[:, keep]
             position_ids = position_ids[:, :, keep]
             next_pos = int(position_ids.max().item()) + 1
@@ -265,6 +322,30 @@ class QwenVLRunner:
                 cur = self.lm_head(out.last_hidden_state[:, -1:, :]).argmax(dim=-1)
                 generated.append(int(cur.item()))
                 step += 1
+        total_ms = timer.total()
+
+        cand_logprobs: Dict[str, float] = {}
+        if score_candidates:
+            with timer.stage("score"):
+                first_logp = torch.log_softmax(logits[0, -1].float(), dim=-1)
+                for label, cand_text in score_candidates.items():
+                    ids = self.processor.tokenizer(cand_text, add_special_tokens=False)["input_ids"]
+                    lp = float(first_logp[ids[0]])
+                    if len(ids) > 1:
+                        cache.crop(seq_len)  # drop generated tokens; keep the prompt KV cache
+                        n = len(ids) - 1
+                        pos = (next_pos + torch.arange(n, device=self.device)).view(1, 1, -1).expand(3, 1, -1)
+                        out = self.lm(
+                            input_ids=torch.tensor([ids[:-1]], device=self.device),
+                            attention_mask=torch.ones(1, seq_len + n, dtype=torch.long, device=self.device),
+                            position_ids=pos,
+                            past_key_values=cache,
+                            use_cache=True,
+                            cache_position=torch.arange(seq_len, seq_len + n, device=self.device),
+                        )
+                        lps = torch.log_softmax(self.lm_head(out.last_hidden_state[0]).float(), dim=-1)
+                        lp += float(sum(lps[j, ids[j + 1]] for j in range(n)))
+                    cand_logprobs[label] = lp
         del cache
 
         text_ids = [t for t in generated if t not in self.eos_ids] if not ignore_eos else generated
@@ -275,14 +356,17 @@ class QwenVLRunner:
             generated_tokens=len(generated),
             stages_ms=stages,
             ttft_ms=ttft,
-            total_latency_ms=timer.total(),
+            total_latency_ms=total_ms,
             num_visual_tokens_before=n_before,
-            num_visual_tokens_after=int(result.keep_indices.numel()),
-            num_dominant=result.num_dominant,
-            num_contextual=result.num_contextual,
+            num_visual_tokens_after=int(keep_idx_t.numel()),
+            num_dominant=n_dom,
+            num_contextual=n_ctx,
             prefill_seq_len=seq_len,
             image_grid_thw=[int(x) for x in grid_thw[0].tolist()],
             token_ids=generated,
+            per_image_tokens_before=per_image,
+            per_image_tokens_after=per_after,
+            candidate_logprobs=cand_logprobs,
         )
 
     @torch.inference_mode()
