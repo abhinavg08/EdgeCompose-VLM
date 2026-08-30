@@ -77,6 +77,22 @@ def test_attention_stats_reorder_to_raster():
     assert keys[1, 0] == pytest.approx(5.0) and keys[0, 0] == pytest.approx(0.0)
 
 
+def test_attention_stats_segments_isolate_images():
+    # two images of 1 merged token (4 patches) each; with segments, image 0's statistics must
+    # not depend on image 1's keys.
+    torch.manual_seed(0)
+    q = torch.randn(8, 2, 4)
+    k = torch.randn(8, 2, 4)
+    wi = torch.tensor([0, 1])
+    imp_a, _ = attention_importance_and_keys(q, k, wi, segments=[(0, 4), (4, 8)])
+    k2 = k.clone()
+    k2[4:] = torch.randn(4, 2, 4) * 10
+    imp_b, _ = attention_importance_and_keys(q, k2, wi, segments=[(0, 4), (4, 8)])
+    assert imp_a[0] == pytest.approx(imp_b[0])
+    # each segment's column sums add up to its number of queries (softmax rows sum to 1)
+    assert float(imp_a.sum()) == pytest.approx(2 * 4 / 4)  # mean over 4 patches per token
+
+
 def test_invalid_retention():
     with pytest.raises(ValueError):
         VisionZipCompression(0.0)

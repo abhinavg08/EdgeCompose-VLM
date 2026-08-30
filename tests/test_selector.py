@@ -1,7 +1,8 @@
+import numpy as np
 import pandas as pd
 import pytest
 
-from edgecompose.optimizer.selector import Constraints, select
+from edgecompose.optimizer.selector import Constraints, InspectionConstraints, select, select_inspection
 
 
 def _agg():
@@ -36,6 +37,25 @@ def test_infeasible_returns_none():
     res = select(_agg(), Constraints(max_vram_mb=1000), "quality")
     assert res["best"] is None
     assert len(res["rejected"]) == 4
+
+
+def _inspect_tab():
+    rows = []
+    for k, r, f1, lat, vram, feas in [(1, 1.0, 0.60, 800, 4000, True), (4, 1.0, 0.70, 2000, 5500, True),
+                                      (4, 0.5, 0.68, 1500, 5300, True), (8, 1.0, 0.72, 3500, 7600, True),
+                                      (8, 0.25, 0.66, 2000, 7000, True), (16, 1.0, np.nan, np.nan, np.nan, False)]:
+        rows.append({"k": k, "retention": r, "attention_backend": "sdpa", "f1": f1, "total_latency_ms_p50": lat,
+                     "ttft_ms_p50": lat * 0.9, "vram_mb": vram, "feasible_all": feas, "energy_j_median": lat / 30})
+    return pd.DataFrame(rows)
+
+
+def test_inspection_selector_constraints_and_min_references():
+    res = select_inspection(_inspect_tab(), InspectionConstraints(max_vram_mb=7000, max_latency_ms=2000,
+                                                                  quality_metric="f1"), "quality")
+    assert (res["best"]["k"], res["best"]["retention"]) == (4, 1.0)
+    res = select_inspection(_inspect_tab(), InspectionConstraints(min_references=4, quality_metric="f1"), "latency")
+    assert (res["best"]["k"], res["best"]["retention"]) == (4, 0.5)
+    assert "k=16, r=1.00" in res["rejected"]  # OOM config is never recommended
 
 
 def test_bad_objective():
