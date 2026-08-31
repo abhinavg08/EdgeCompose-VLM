@@ -1,0 +1,80 @@
+{
+  "category": "breakfast_box",
+  "k": 8,
+  "seed": 1,
+  "pool": "train/good",
+  "references": [
+    {
+      "sample_id": "breakfast_box/train/good/319",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/319.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "breakfast_box/train/good/046",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/046.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "breakfast_box/train/good/341",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/341.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "breakfast_box/train/good/151",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/151.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "breakfast_box/train/good/094",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/094.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "breakfast_box/train/good/177",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/177.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "breakfast_box/train/good/256",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/256.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "breakfast_box/train/good/330",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/330.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    }
+  ]
+}

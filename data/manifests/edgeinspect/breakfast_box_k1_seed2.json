@@ -1,0 +1,17 @@
+{
+  "category": "breakfast_box",
+  "k": 1,
+  "seed": 2,
+  "pool": "train/good",
+  "references": [
+    {
+      "sample_id": "breakfast_box/train/good/047",
+      "category": "breakfast_box",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/train/good/047.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    }
+  ]
+}
