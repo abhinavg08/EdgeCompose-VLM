@@ -1,0 +1,912 @@
+{
+  "category": "juice_bottle",
+  "name": "dev",
+  "seed": 1234,
+  "per_label": {
+    "normal": 50,
+    "logical_anomaly": 25,
+    "structural_anomaly": 25
+  },
+  "queries": [
+    {
+      "sample_id": "juice_bottle/test/good/045",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/045.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/018",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/018.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/011",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/011.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/074",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/074.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/054",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/054.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/088",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/088.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/040",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/040.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/073",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/073.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/066",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/066.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/001",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/001.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/042",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/042.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/086",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/086.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/064",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/064.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/070",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/070.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/000",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/000.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/082",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/082.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/049",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/049.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/081",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/081.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/068",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/068.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/007",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/007.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/017",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/017.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/084",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/084.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/047",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/047.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/019",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/019.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/071",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/071.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/083",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/083.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/025",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/025.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/032",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/032.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/050",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/050.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/058",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/058.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/052",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/052.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/033",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/033.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/004",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/004.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/035",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/035.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/023",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/023.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/031",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/031.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/051",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/051.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/014",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/014.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/077",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/077.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/053",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/053.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/087",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/087.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/046",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/046.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/021",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/021.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/056",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/056.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/028",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/028.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/002",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/002.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/037",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/037.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/034",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/034.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/044",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/044.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/good/036",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/good/036.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/119",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/119.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/043",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/043.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/086",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/086.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/064",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/064.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/113",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/113.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/001",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/001.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/087",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/087.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/050",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/050.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/103",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/103.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/008",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/008.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/063",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/063.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/110",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/110.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/000",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/000.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/017",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/017.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/047",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/047.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/052",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/052.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/040",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/040.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/084",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/084.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/107",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/107.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/140",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/140.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/003",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/003.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/062",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/062.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/134",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/134.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/038",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/038.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/logical_anomalies/074",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/logical_anomalies/074.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/001",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/001.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/034",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/034.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/018",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/018.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/090",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/090.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/025",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/025.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/008",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/008.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/073",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/073.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/079",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/079.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/081",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/081.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/027",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/027.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/068",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/068.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/075",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/075.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/021",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/021.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/030",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/030.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/051",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/051.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/059",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/059.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/039",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/039.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/038",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/038.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/026",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/026.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/028",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/028.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/065",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/065.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/011",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/011.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/033",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/033.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/062",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/062.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "juice_bottle/test/structural_anomalies/048",
+      "category": "juice_bottle",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/test/structural_anomalies/048.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    }
+  ]
+}

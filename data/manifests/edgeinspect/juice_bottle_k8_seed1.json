@@ -1,0 +1,80 @@
+{
+  "category": "juice_bottle",
+  "k": 8,
+  "seed": 1,
+  "pool": "train/good",
+  "references": [
+    {
+      "sample_id": "juice_bottle/train/good/069",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/069.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/232",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/232.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/085",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/085.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/081",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/081.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/144",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/144.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/331",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/331.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/258",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/258.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/127",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/127.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    }
+  ]
+}

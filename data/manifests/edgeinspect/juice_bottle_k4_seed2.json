@@ -1,0 +1,44 @@
+{
+  "category": "juice_bottle",
+  "k": 4,
+  "seed": 2,
+  "pool": "train/good",
+  "references": [
+    {
+      "sample_id": "juice_bottle/train/good/128",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/128.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/246",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/246.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/181",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/181.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "juice_bottle/train/good/198",
+      "category": "juice_bottle",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/juice_bottle/train/good/198.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    }
+  ]
+}
