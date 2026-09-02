@@ -1,0 +1,912 @@
+{
+  "category": "pushpins",
+  "name": "dev",
+  "seed": 1234,
+  "per_label": {
+    "normal": 50,
+    "logical_anomaly": 25,
+    "structural_anomaly": 25
+  },
+  "queries": [
+    {
+      "sample_id": "pushpins/test/good/032",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/032.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/035",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/035.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/021",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/021.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/127",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/127.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/102",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/102.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/074",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/074.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/016",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/016.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/112",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/112.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/100",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/100.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/085",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/085.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/099",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/099.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/053",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/053.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/073",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/073.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/109",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/109.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/092",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/092.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/040",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/040.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/050",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/050.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/064",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/064.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/023",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/023.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/126",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/126.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/036",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/036.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/101",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/101.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/013",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/013.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/088",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/088.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/075",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/075.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/005",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/005.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/071",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/071.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/108",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/108.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/052",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/052.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/043",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/043.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/024",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/024.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/084",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/084.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/020",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/020.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/079",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/079.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/134",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/134.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/003",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/003.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/113",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/113.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/028",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/028.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/042",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/042.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/095",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/095.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/049",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/049.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/015",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/015.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/104",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/104.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/106",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/106.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/128",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/128.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/123",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/123.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/006",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/006.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/067",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/067.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/004",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/004.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/good/137",
+      "category": "pushpins",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/good/137.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/034",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/034.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/049",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/049.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/063",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/063.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/078",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/078.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/082",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/082.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/054",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/054.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/089",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/089.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/042",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/042.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/016",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/016.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/033",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/033.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/050",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/050.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/064",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/064.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/044",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/044.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/008",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/008.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/072",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/072.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/028",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/028.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/036",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/036.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/001",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/001.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/038",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/038.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/086",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/086.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/061",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/061.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/043",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/043.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/069",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/069.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/019",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/019.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/logical_anomalies/065",
+      "category": "pushpins",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/logical_anomalies/065.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/034",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/034.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/071",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/071.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/000",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/000.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/011",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/011.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/039",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/039.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/014",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/014.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/069",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/069.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/028",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/028.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/010",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/010.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/049",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/049.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/020",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/020.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/033",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/033.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/015",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/015.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/002",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/002.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/024",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/024.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/060",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/060.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/046",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/046.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/045",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/045.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/016",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/016.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/013",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/013.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/031",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/031.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/041",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/041.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/009",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/009.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/032",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/032.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "pushpins/test/structural_anomalies/063",
+      "category": "pushpins",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/test/structural_anomalies/063.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "category": "pushpins",
+  "k": 8,
+  "seed": 0,
+  "pool": "train/good",
+  "references": [
+    {
+      "sample_id": "pushpins/train/good/244",
+      "category": "pushpins",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/train/good/244.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/train/good/135",
+      "category": "pushpins",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/train/good/135.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/train/good/335",
+      "category": "pushpins",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/train/good/335.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/train/good/366",
+      "category": "pushpins",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/train/good/366.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/train/good/088",
+      "category": "pushpins",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/train/good/088.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/train/good/003",
+      "category": "pushpins",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/train/good/003.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/train/good/241",
+      "category": "pushpins",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/train/good/241.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "pushpins/train/good/098",
+      "category": "pushpins",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/pushpins/train/good/098.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    }
+  ]
+}
