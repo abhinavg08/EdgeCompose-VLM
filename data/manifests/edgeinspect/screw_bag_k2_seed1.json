@@ -1,0 +1,26 @@
+{
+  "category": "screw_bag",
+  "k": 2,
+  "seed": 1,
+  "pool": "train/good",
+  "references": [
+    {
+      "sample_id": "screw_bag/train/good/226",
+      "category": "screw_bag",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/screw_bag/train/good/226.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "screw_bag/train/good/266",
+      "category": "screw_bag",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/screw_bag/train/good/266.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    }
+  ]
+}
