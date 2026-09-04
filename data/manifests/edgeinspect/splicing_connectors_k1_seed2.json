@@ -1,0 +1,17 @@
+{
+  "category": "splicing_connectors",
+  "k": 1,
+  "seed": 2,
+  "pool": "train/good",
+  "references": [
+    {
+      "sample_id": "splicing_connectors/train/good/045",
+      "category": "splicing_connectors",
+      "split": "train",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/train/good/045.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    }
+  ]
+}

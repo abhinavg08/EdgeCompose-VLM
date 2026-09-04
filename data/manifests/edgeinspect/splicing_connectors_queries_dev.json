@@ -1,0 +1,912 @@
+{
+  "category": "splicing_connectors",
+  "name": "dev",
+  "seed": 1234,
+  "per_label": {
+    "normal": 50,
+    "logical_anomaly": 25,
+    "structural_anomaly": 25
+  },
+  "queries": [
+    {
+      "sample_id": "splicing_connectors/test/good/100",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/100.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/035",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/035.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/021",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/021.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/013",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/013.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/066",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/066.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/079",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/079.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/030",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/030.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/031",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/031.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/006",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/006.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/091",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/091.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/049",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/049.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/085",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/085.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/109",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/109.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/033",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/033.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/090",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/090.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/009",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/009.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/038",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/038.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/084",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/084.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/053",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/053.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/082",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/082.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/073",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/073.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/016",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/016.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/115",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/115.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/081",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/081.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/032",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/032.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/080",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/080.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/072",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/072.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/077",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/077.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/099",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/099.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/067",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/067.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/041",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/041.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/101",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/101.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/050",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/050.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/065",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/065.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/108",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/108.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/069",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/069.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/093",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/093.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/105",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/105.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/004",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/004.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/014",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/014.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/076",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/076.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/112",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/112.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/044",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/044.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/086",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/086.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/012",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/012.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/017",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/017.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/092",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/092.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/096",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/096.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/062",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/062.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/good/114",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "normal",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/good/114.png",
+      "binary": 0,
+      "anomaly_type": "none"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/083",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/083.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/004",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/004.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/035",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/035.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/017",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/017.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/102",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/102.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/027",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/027.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/069",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/069.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/059",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/059.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/043",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/043.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/107",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/107.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/048",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/048.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/046",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/046.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/106",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/106.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/077",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/077.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/070",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/070.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/025",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/025.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/019",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/019.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/079",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/079.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/054",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/054.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/076",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/076.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/000",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/000.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/065",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/065.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/033",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/033.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/073",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/073.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/logical_anomalies/010",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "logical_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/logical_anomalies/010.png",
+      "binary": 1,
+      "anomaly_type": "logical"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/041",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/041.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/039",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/039.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/084",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/084.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/013",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/013.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/037",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/037.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/070",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/070.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/069",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/069.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/053",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/053.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/010",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/010.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/027",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/027.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/076",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/076.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/008",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/008.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/030",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/030.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/068",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/068.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/059",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/059.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/043",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/043.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/020",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/020.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/038",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/038.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/061",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/061.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/018",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/018.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/082",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/082.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/032",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/032.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/029",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/029.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/058",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/058.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    },
+    {
+      "sample_id": "splicing_connectors/test/structural_anomalies/057",
+      "category": "splicing_connectors",
+      "split": "test",
+      "label": "structural_anomaly",
+      "path": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/splicing_connectors/test/structural_anomalies/057.png",
+      "binary": 1,
+      "anomaly_type": "structural"
+    }
+  ]
+}
