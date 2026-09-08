@@ -1,0 +1,32 @@
+{
+  "model_id": "Qwen/Qwen2.5-VL-3B-Instruct-AWQ",
+  "attention_backend": "sdpa",
+  "awq_dequant_threshold": 64,
+  "token_method": "visionzip",
+  "min_pixels": 100352,
+  "max_pixels": 401408,
+  "compress_query": true,
+  "max_new_tokens": 6,
+  "warmup": 2,
+  "calibration": 10,
+  "oom_skip_after": 3,
+  "extra": {},
+  "categories": [
+    "pushpins",
+    "splicing_connectors"
+  ],
+  "ks": [
+    1,
+    4
+  ],
+  "retentions": [
+    1.0,
+    0.5
+  ],
+  "seeds": [
+    0
+  ],
+  "queries": "dev",
+  "limit": 60,
+  "prompt_example_k2": "You are performing industrial visual inspection of a box of pushpins. The first 2 images show correctly manufactured products (known-good references). The final image is the product to inspect.\nReference 1 (known-good):\n<image>\nReference 2 (known-good):\n<image>\nQuery image (the product to inspect):\n<image>\nCompare the query image against the known-good references and decide whether the query product is NORMAL or ANOMALOUS. An anomaly may be structural (damage, deformation, contamination or another physical defect) or logical (a component that is missing, extra, misplaced, of the wrong type or wrong quantity, or incorrectly arranged). Answer with exactly one word: NORMAL or ANOMALOUS."
+}

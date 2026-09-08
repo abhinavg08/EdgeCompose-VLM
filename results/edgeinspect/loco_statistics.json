@@ -1,0 +1,50 @@
+{
+  "root": "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection",
+  "categories": [
+    {
+      "category": "breakfast_box",
+      "train_good": 351,
+      "validation_good": 62,
+      "test_good": 102,
+      "test_logical": 83,
+      "test_structural": 90,
+      "test_total": 275
+    },
+    {
+      "category": "juice_bottle",
+      "train_good": 335,
+      "validation_good": 54,
+      "test_good": 94,
+      "test_logical": 142,
+      "test_structural": 94,
+      "test_total": 330
+    },
+    {
+      "category": "pushpins",
+      "train_good": 372,
+      "validation_good": 69,
+      "test_good": 138,
+      "test_logical": 91,
+      "test_structural": 81,
+      "test_total": 310
+    },
+    {
+      "category": "screw_bag",
+      "train_good": 360,
+      "validation_good": 60,
+      "test_good": 122,
+      "test_logical": 137,
+      "test_structural": 82,
+      "test_total": 341
+    },
+    {
+      "category": "splicing_connectors",
+      "train_good": 360,
+      "validation_good": 60,
+      "test_good": 119,
+      "test_logical": 108,
+      "test_structural": 85,
+      "test_total": 312
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "load": {
     "model_id": "Qwen/Qwen2.5-VL-3B-Instruct-AWQ",
     "attention_backend": "sdpa",
-    "model_load_time_s": 7.996251700000001,
+    "model_load_time_s": 5.627311,
     "model_load_allocated_mb": 3250.72216796875,
     "model_load_device_mb": 3408.0,
     "quantization_config": "AwqConfig(quant_method=<QuantizationMethod.AWQ: 'awq'>)"
@@ -11,14 +11,14 @@
     "text": "The text on the red sign is \"STOP 42\".",
     "generated_tokens": 14,
     "stages_ms": {
-      "preprocess": 22.818900000000752,
-      "vision": 182.74429999999953,
-      "compress": 2.204599999998891,
-      "prefill": 300.2108999999997,
-      "decode": 1570.8833999999997
+      "preprocess": 9.042999999998358,
+      "vision": 143.83049999999997,
+      "compress": 1.3567999999999358,
+      "prefill": 300.37229999999937,
+      "decode": 810.5317999999997
     },
-    "ttft_ms": 507.97869999999887,
-    "total_latency_ms": 2078.8620999999985,
+    "ttft_ms": 454.60259999999766,
+    "total_latency_ms": 1265.1343999999974,
     "num_visual_tokens_before": 391,
     "num_visual_tokens_after": 391,
     "num_dominant": 391,
@@ -45,9 +45,16 @@
       3263,
       151645
     ],
+    "per_image_tokens_before": [
+      391
+    ],
+    "per_image_tokens_after": [
+      391
+    ],
+    "candidate_logprobs": {},
     "allocated_mb": 3259.26708984375,
     "reserved_mb": 3476.0,
-    "peak_allocated_mb": 3329.62060546875,
+    "peak_allocated_mb": 3329.62744140625,
     "peak_reserved_mb": 3476.0,
     "hf_generate_text": "The text on the red sign is \"STOP 42\".",
     "matches_hf_generate": true
@@ -56,14 +63,14 @@
     "text": "The text on the red sign is \"STOP 42\".",
     "generated_tokens": 14,
     "stages_ms": {
-      "preprocess": 17.193299999998857,
-      "vision": 178.95809999999912,
-      "compress": 9.622700000001316,
-      "prefill": 174.24789999999746,
-      "decode": 1599.3469000000005
+      "preprocess": 8.885499999998103,
+      "vision": 140.94340000000116,
+      "compress": 5.783900000000841,
+      "prefill": 171.65130000000062,
+      "decode": 785.4872999999998
     },
-    "ttft_ms": 380.02199999999675,
-    "total_latency_ms": 1979.3688999999972,
+    "ttft_ms": 327.2641000000007,
+    "total_latency_ms": 1112.7514000000006,
     "num_visual_tokens_before": 391,
     "num_visual_tokens_after": 196,
     "num_dominant": 177,
@@ -90,6 +97,13 @@
       3263,
       151645
     ],
+    "per_image_tokens_before": [
+      391
+    ],
+    "per_image_tokens_after": [
+      196
+    ],
+    "candidate_logprobs": {},
     "allocated_mb": 3259.267578125,
     "reserved_mb": 3496.0,
     "peak_allocated_mb": 3329.3935546875,
