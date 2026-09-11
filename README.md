@@ -9,9 +9,29 @@ batch-1 VLM inference on a consumer **RTX 4060 Laptop GPU (8 GB)**. It is a
 *systems study*, not a new compression algorithm: every technique used here is prior work
 (see [References](#references)); the contribution is the unified, instrumented
 implementation, stage-wise profiling, composition/interaction analysis, Pareto analysis
-and a measured-data deployment optimizer.
+and a measured-data deployment optimizer. A second part, **[EdgeInspect-VLM](#edgeinspect-vlm)**,
+applies the stack to few-shot industrial inspection on MVTec LOCO AD.
 
-<!-- RESULTS-SUMMARY -->
+**In one minute (measured, 500 TextVQA + 500 POPE questions, 14 configs, 14,000 queries):**
+
+* **Compression composes with attention additively, but interacts with the quantization
+  kernels.** SDPA speeds up the *vision encoder* (−40%), VisionZip shortens *prefill*; their
+  savings add. AutoAWQ's hard-coded kernel threshold (M ≥ 1024 → dequant+cuBLAS) made
+  75%-token VisionZip **17% slower in TTFT** on TextVQA; re-tuning the threshold to the
+  measured crossover (M = 64) turned the same pruning into a **27.8% end-to-end speedup at
+  99.6% of baseline accuracy** (and −27% energy).
+* **Quality:** TextVQA keeps 99.7 / 97.0 / 83.3% of accuracy at 75 / 50 / 25% visual tokens;
+  POPE is unchanged within noise. VisionZip beats uniform subsampling only at 25% (+6.8 pp).
+* **Bottleneck shift:** after pruning, the vision encoder is the largest stage (37% → 53% of
+  latency); decode is ~64 ms/token regardless of prompt length.
+* **Pareto front** = tuned AWQ dispatch + VisionZip only (T1/T2/T3); the baseline and all eager
+  configurations are dominated. Eager attention costs +1.7 GB VRAM on TextVQA.
+
+| TextVQA (n=500) | Accuracy | TTFT | E2E latency | Peak alloc | Energy |
+|---|---|---|---|---|---|
+| C0 baseline (AWQ INT4, SDPA, 100% tokens) | 0.775 | 957 ms | 1245 ms | 3507 MB | 92.4 J |
+| T1 tuned AWQ dispatch + VisionZip 75% | 0.772 | 765 ms | **899 ms (−27.8%)** | 3446 MB | 67.6 J |
+| T2 tuned AWQ dispatch + VisionZip 50% | 0.750 | 655 ms | 789 ms (−36.6%) | 3446 MB | 58.6 J |
 
 ---
 
@@ -114,16 +134,19 @@ python scripts/smoke_test.py            # one image + question, VRAM/latency, HF
 ```powershell
 # baseline on 20 samples
 python scripts/benchmark.py --configs baseline.yaml --datasets textvqa pope --n 200 --limit 20
-# full matrix (10 configs, one model load, interleaved), dev or final subsets
+# development matrix (10 configs, one model load, interleaved), 200 samples/dataset
 python scripts/run_sweep.py --sweep sweep_main.yaml --n 200
-python scripts/run_sweep.py --sweep sweep_main.yaml --n 1000
+# AWQ kernel crossover microbenchmark (-> tuned dispatch threshold 64)
+python scripts/awq_kernel_bench.py
+# FINAL matrix: 14 configs x 500 samples/dataset (prefix of the 1000-sample manifests), ~4.5 h
+python scripts/run_sweep.py --sweep sweep_final.yaml --n 1000 --limit 500
 # decode profiling (force 32 new tokens) and run-to-run variability (3 repeats)
-python scripts/benchmark.py --configs baseline.yaml token_75.yaml token_50.yaml token_25.yaml eager_baseline.yaml eager_token_75.yaml eager_token_50.yaml eager_token_25.yaml --datasets textvqa --n 200 --limit 40 --ignore-eos --tag decode32
-python scripts/benchmark.py --configs baseline.yaml token_50.yaml token_25.yaml eager_baseline.yaml --datasets textvqa pope --n 200 --limit 60 --repeats 3 --tag rep
+python scripts/benchmark.py --configs baseline.yaml token_25.yaml eager_baseline.yaml eager_token_25.yaml tuned_baseline.yaml tuned_token_25.yaml --datasets textvqa --n 200 --limit 40 --ignore-eos --tag decode32 --no-power
+python scripts/benchmark.py --configs baseline.yaml token_50.yaml token_25.yaml eager_baseline.yaml tuned_baseline.yaml tuned_token_50.yaml --datasets textvqa pope --n 200 --limit 40 --repeats 3 --tag rep --no-power
 # isolated per-config VRAM footprint
-python scripts/memory_profile.py --n 200 --k 10
-# analysis + optimizer
-python scripts/analyze.py --n 1000 --main
+python scripts/memory_profile.py --sweep sweep_final.yaml --n 200 --k 10
+# analysis (tables + figures) and optimizer
+python scripts/analyze.py --n 500 --main
 python scripts/optimize.py --max-vram-mb 7000 --max-latency-ms 1500 --min-quality 0.90 --relative-quality
 ```
 
@@ -138,12 +161,123 @@ logged with `status`/`error_message`, never dropped.
 | C1 / C2 / C3 | AWQ INT4 | 75 / 50 / 25% | VisionZip | SDPA |
 | E0 | AWQ INT4 | 100% | - | eager |
 | E1 / E2 / E3 | AWQ INT4 | 75 / 50 / 25% | VisionZip | eager |
+| T0 / T1 / T2 / T3 | AWQ INT4, **tuned dispatch** (dequant+cuBLAS for M ≥ 64) | 100 / 75 / 50 / 25% | VisionZip | SDPA |
 | U2 / U3 (control) | AWQ INT4 | 50 / 25% | uniform raster subsampling | SDPA |
 | C4-C7 (optional) | AWQ INT4 | 100/75/50/25% | VisionZip | FlashAttention-2 - **not runnable here** (see Limitations) |
+
+The T-arm was added after the development sweep exposed the AutoAWQ dispatch effect
+(Figure 9); the threshold comes from `scripts/awq_kernel_bench.py` (Figure 10), not from
+tuning on benchmark data.
 
 Shared protocol: identical samples, prompt (`<question>\nAnswer the question using a single
 word or phrase.`), pure greedy decoding, `max_new_tokens=32`, image budget 256-1024
 visual tokens (`min_pixels=256·28²`, `max_pixels=1024·28²`), 5 held-out warmup samples
 per configuration, peak-memory reset before every query.
 
-<!-- RESULTS -->
+## 10. Results (final: 500 TextVQA + 500 POPE, all 14 configs interleaved)
+
+Medians; quality with 95% bootstrap CI. Full tables (all configs, p95, CIs, stage shares,
+POPE detail, interaction, theory vs measured): [`results/aggregate/tables_500.md`](results/aggregate/tables_500.md);
+machine-readable: [`results/results.csv`](results/results.csv); per query: `results/raw/*_500.jsonl`.
+
+| Dataset | Config | Quality [95% CI] | Quality kept | TTFT | E2E | Δ E2E vs C0 | Peak alloc | Energy |
+|---|---|---|---|---|---|---|---|---|
+| TextVQA | C0 SDPA 100% | 0.775 [0.739, 0.808] | 100% | 957 | 1245 | — | 3507 MB | 92.4 J |
+| TextVQA | C1 SDPA VZ 75% | 0.772 | 99.7% | 1119 | 1259 | +1.1% | 3446 MB | 96.2 J |
+| TextVQA | C2 SDPA VZ 50% | 0.752 | 97.0% | 891 | 1032 | −17.1% | 3446 MB | 78.3 J |
+| TextVQA | C3 SDPA VZ 25% | 0.646 | 83.3% | 687 | 832 | −33.2% | 3446 MB | 62.3 J |
+| TextVQA | T0 tuned 100% | 0.775 | 100% | 843 | 976 | −21.6% | 3507 MB | 73.5 J |
+| TextVQA | **T1 tuned VZ 75%** | 0.772 | 99.6% | 765 | **899** | **−27.8%** | 3446 MB | 67.6 J |
+| TextVQA | T2 tuned VZ 50% | 0.750 | 96.9% | 655 | 789 | −36.6% | 3446 MB | 58.6 J |
+| TextVQA | E0 eager 100% | 0.774 | 99.9% | 1313 | 1468 | +17.9% | 5216 MB | 102.4 J |
+| POPE | C0 SDPA 100% | 0.848 [0.818, 0.878] | 100% | 459 | 530 | — | 3322 MB | 39.4 J |
+| POPE | C2 SDPA VZ 50% | 0.850 | 100.2% | 322 | 398 | −24.9% | 3321 MB | 27.7 J |
+| POPE | T0 tuned 100% | 0.848 | 100% | 296 | 371 | −30.0% | 3346 MB | 25.9 J |
+| POPE | **T2 tuned VZ 50%** | 0.850 | 100.2% | 260 | **325** | **−38.7%** | 3329 MB | 23.8 J |
+| POPE | T3 tuned VZ 25% | 0.834 | 98.3% | 232 | 299 | −43.6% | 3321 MB | 20.6 J |
+| POPE | E0 eager 100% | 0.848 | 100% | 533 | 606 | +14.5% | 3520 MB | 43.7 J |
+
+Times in ms. Energy = NVML-sampled GPU power x time. Pareto-efficient (noise-aware):
+TextVQA T1, T2, T3; POPE T2, T3.
+
+## 11. Plots
+
+| | |
+|---|---|
+| ![Fig 1](plots/fig1_quality_vs_latency_500.png) **Fig 1** quality vs latency (Pareto ringed) | ![Fig 2](plots/fig2_quality_vs_memory_500.png) **Fig 2** quality vs peak memory |
+| ![Fig 3](plots/fig3_stage_latency_500.png) **Fig 3** stage-wise latency | ![Fig 4](plots/fig4_retention_vs_quality_500.png) **Fig 4** retention vs quality |
+| ![Fig 5](plots/fig5_retention_vs_ttft_500.png) **Fig 5** retention vs TTFT | ![Fig 6](plots/fig6_quality_vs_energy_500.png) **Fig 6** quality vs energy |
+| ![Fig 7](plots/fig7_interaction_heatmap_500.png) **Fig 7** composition interaction I(A,B) | ![Fig 8](plots/fig8_theory_vs_measured_500.png) **Fig 8** FLOPs vs measured |
+| ![Fig 9](plots/fig9_prefill_vs_length_500.png) **Fig 9** prefill vs prompt length (AWQ dispatch cliff) | ![Fig 10](plots/fig10_awq_kernel_crossover.png) **Fig 10** AWQ kernel crossover |
+
+## 12. Key findings
+
+Measured facts (M) are separated from explanations (E); see the report for details.
+
+1. **(M) Token compression reduces latency only where the kernel regime allows it.** 50%/25%
+   retention: −17% / −33% E2E (TextVQA), −25% / −37% (POPE). 75% on TextVQA: no E2E gain
+   and **+17% TTFT**. (E) Pruning moves ~1000-token prompts below AutoAWQ's M=1024 switch onto
+   a fused Triton GEMM that is 2.6x slower at this size (Fig 9, 10).
+2. **(M) Benefits are entirely in prefill.** Vision time changes by ≤1%, decode stays ~64
+   ms/token (independent of KV length 278-993); prefill falls up to 74%.
+3. **(M) Aggressive reduction hurts TextVQA disproportionately** (−12.9 pp at 25%) while POPE
+   is flat (−1.2 pp, n.s.); POPE precision stays ≈0.90 and the yes-ratio falls slightly
+   (0.444 → 0.428): no sign of more hallucination.
+4. **(M) SDPA x VisionZip compose additively** (disjoint stages: vision vs prefill;
+   stage-level |I| ≤ 0.016). **Tuned dispatch x VisionZip interact**: synergy on TextVQA
+   (I = −0.07 E2E, −0.38 prefill at 75%), interference on POPE (I = +0.05…+0.13).
+5. **(M) Theory tracks measurement only within a kernel regime** (POPE prefill 0.558 vs FLOPs
+   0.547 at 50%; TextVQA 1.267 vs 0.755 at 75% upstream). TTFT savings are capped by the
+   vision encoder (≈47% of TTFT FLOPs at 100%).
+6. **(M) Bottleneck shift:** vision share 37% → 53% (TextVQA, T3); eager attention makes the
+   vision encoder 50-61% of latency and adds 1.7 GB VRAM.
+7. **(M) The 8 GB limit does not bind single-image VQA** at ≤1024 visual tokens (optimum uses
+   3.45 GB allocated / 4.85 GB device incl. 1.1 GB context and other apps); it binds for
+   multi-image prompts (see EdgeInspect).
+
+**Deployment optimizer examples (real output on `results/results.csv`):**
+```text
+$ python scripts/optimize.py --objective latency --min-quality 0.97 --relative-quality
+BEST: T1_sdpa_awq64_r75  quality/baseline=0.999  latency=628 ms  TTFT=529 ms  peak VRAM=4850 MB  energy=46.9 J
+$ python scripts/optimize.py --max-vram-mb 7000 --max-latency-ms 1500 --min-quality 0.90 --relative-quality
+BEST: T0_sdpa_awq64_r100  quality/baseline=1.000  latency=673 ms  TTFT=570 ms  peak VRAM=4886 MB  energy=49.7 J
+$ python scripts/optimize.py --objective quality --max-latency-ms 800 --datasets textvqa
+BEST: T2_sdpa_awq64_r50  quality=0.750  latency=789 ms  TTFT=655 ms  peak VRAM=4840 MB  energy=58.6 J
+```
+(Multi-dataset latency/quality are averaged over TextVQA and POPE; VRAM = isolated device footprint.)
+
+## 13. Limitations
+
+* One GPU (RTX 4060 **Laptop**, Windows/WDDM, CUDA 11.8 PyTorch build); absolute latencies drift
+  12-32% between sessions (ratios within a session are stable; answers identical).
+* FlashAttention-2 not evaluated (no wheel/toolkit); SDPA = memory-efficient kernel.
+* 500 questions per dataset (not full splits); quality CIs ±3-4 pp.
+* Short-answer VQA only (2-4 decode tokens); one model family; VisionZip re-implemented from
+  the official Qwen2.5-VL code (selection logic identical, positions our own).
+* AWQ via AutoAWQ Triton kernels; the dispatch finding is specific to that kernel pair.
+* Energy is GPU-only NVML-sampled power; the NVML energy counter was implausible on this GPU.
+Full list: [report §6](report/edgecompose_report.md#6-limitations).
+
+## 14. Reproducibility
+
+* `results/system_info.json` (hardware/software), `requirements-lock.txt` (exact packages),
+  `results/env_before_edgecompose.txt` (host env before additions).
+* Fixed seeds and saved manifests with ID digests (`data/manifests/`); every configuration sees
+  identical samples, prompt and decoding; raw per-query JSONL logs for every run.
+* `PROJECT_STATUS.md` records every command, decision and failed approach.
+* Workarounds applied in code (no site-packages edits): AutoAWQ `PytorchGELUTanh` alias;
+  `MKL_THREADING_LAYER=SEQUENTIAL` (the host conda MKL crashed numpy BLAS);
+  checkpoint `repetition_penalty=1.05` disabled (pure greedy, verified equal to `generate()`).
+
+## References
+
+* Qwen2.5-VL: Bai et al., *Qwen2.5-VL Technical Report*, 2025; checkpoint `Qwen/Qwen2.5-VL-3B-Instruct-AWQ`.
+* AWQ: Lin et al., *AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration*, MLSys 2024;
+  AutoAWQ (casper-hansen/AutoAWQ, archived), triton-windows.
+* VisionZip: Yang et al., *VisionZip: Longer is Better but Not Necessary in Vision Language Models*, CVPR 2025;
+  github.com/dvlab-research/VisionZip (Qwen2.5-VL code, 2025-05).
+* FlashAttention: Dao et al., 2022/2023; PyTorch `scaled_dot_product_attention`.
+* TextVQA: Singh et al., CVPR 2019 (lmms-lab/textvqa release); POPE: Li et al., EMNLP 2023 (lmms-lab/POPE).
+* MVTec LOCO AD: Bergmann et al., IJCV 2022 (CC BY-NC-SA 4.0).
+
+<!-- EDGEINSPECT -->

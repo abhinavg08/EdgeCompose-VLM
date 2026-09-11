@@ -72,6 +72,25 @@ $py = "python"
 - NVML energy counter: implausible (>TGP) for sub-second windows.
 - matplotlib crash traced to MKL OpenMP layer, not matplotlib (reinstall did not help).
 
+## EdgeInspect-VLM (continuation; starts after EdgeCompose final analysis)
+User request (2026-09-30 17:16): after EdgeCompose completes end to end, build EdgeInspect-VLM
+(few-shot industrial inspection on MVTec LOCO AD) inside this repo, build order A0-A10.
+- Dataset: MVTec LOCO AD (CC BY-NC-SA 4.0) downloading to `hf_assets/mvtec_loco/` from the
+  official MVTec mydrive link; extraction deferred until the GPU sweep ends (CPU-heavy).
+- Code written (CPU-only, while the GPU sweep runs):
+  `edgeinspect/{datasets/mvtec_loco.py, references/sampler.py, prompts/inspection.py,
+  inference/classify.py, inference/explain.py, metrics/anomaly.py, analysis/fewshot.py, runner.py}`,
+  scripts `prepare_loco.py, inspect_smoke_test.py, run_edgeinspect.py, edgeinspect_memory.py,
+  inspect_demo.py` (NOT inspect.py: that name shadows the stdlib `inspect` module), optimizer
+  `--task industrial_inspection`. Tests: 43 passing.
+- Runner generalized: `QwenVLRunner.run_images()` (multi-image, per-image VisionZip with
+  per-image attention statistics, optional query exemption, exact class-likelihood scoring on a
+  cropped KV cache, timed separately). `run()` is now a wrapper → re-verify EdgeCompose smoke test.
+- Design: references from train/good only, nested in k per seed; queries stratified from test;
+  SDPA + tuned AWQ dispatch (threshold 64); per-image budget default 512 visual tokens
+  (to be confirmed by A3 timing probe).
+- Next: A0 (re-run smoke_test.py), A1 prepare_loco.py, A3 inspect_smoke_test.py --probe, A4, A5.
+
 ## Open items
 - Ollama (user has it) not usable for the core study (GGUF engine: no token pruning/backend switch/stage timing);
   listed as possible external reference in future work.
