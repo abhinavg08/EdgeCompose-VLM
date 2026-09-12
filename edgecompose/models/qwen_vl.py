@@ -92,7 +92,16 @@ class QwenVLRunner:
         max_pixels: int = 1024 * 28 * 28,
         device: str = "cuda:0",
         dtype: torch.dtype = torch.float16,
+        vision_dtype: Optional[torch.dtype] = torch.bfloat16,
     ) -> None:
+        """
+        Args:
+            dtype: dtype of the AWQ language model (AWQ kernels require float16).
+            vision_dtype: dtype of the (unquantized) vision tower. Default bfloat16 (the
+                checkpoint's native dtype): in float16 the residual stream of the last ViT block
+                overflows (Inf -> NaN -> degenerate '!!!!' outputs) for ~3% of TextVQA images.
+                None keeps the vision tower in `dtype` (the behaviour of the first EdgeCompose runs).
+        """
         from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
         self.model_id = model_id
@@ -111,6 +120,9 @@ class QwenVLRunner:
             attn_implementation=self.attention_backend,
             device_map={"": self.device.index or 0},
         ).eval()
+        if vision_dtype is not None and vision_dtype != dtype:
+            self.model.model.visual.to(vision_dtype)
+        self.vision_dtype = self.model.model.visual.dtype
         torch.cuda.synchronize()
         self.load_time_s = time.perf_counter() - t0
         snap = memory.snapshot()
@@ -388,6 +400,7 @@ class QwenVLRunner:
         return {
             "model_id": self.model_id,
             "attention_backend": self.attention_backend,
+            "vision_dtype": str(self.vision_dtype),
             "model_load_time_s": self.load_time_s,
             "model_load_allocated_mb": self.model_load_allocated_mb,
             "model_load_device_mb": self.model_load_device_mb,

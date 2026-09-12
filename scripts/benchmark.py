@@ -47,6 +47,10 @@ def main() -> None:
     ap.add_argument("--tag", default="", help="suffix for raw result files")
     ap.add_argument("--results-dir", default=str(RESULTS_DIR))
     ap.add_argument("--no-power", action="store_true")
+    ap.add_argument("--vision-dtype", default="bfloat16", choices=["float16", "bfloat16"],
+                    help="vision-tower dtype (default bfloat16). The reported EdgeCompose sweeps ran with float16, "
+                         "which overflows on ~3%% of TextVQA images - pass float16 to reproduce them (see report erratum)")
+    ap.add_argument("--ids-file", default=None, help="optional text file of sample_ids to evaluate (one per line)")
     args = ap.parse_args()
 
     results_dir = Path(args.results_dir)
@@ -60,14 +64,25 @@ def main() -> None:
 
     from edgecompose.models.qwen_vl import QwenVLRunner
 
+    import torch
+
     runner = QwenVLRunner(base.model_id, attention_backend=base.attention_backend,
-                          min_pixels=base.min_pixels, max_pixels=base.max_pixels)
-    write_json(runner.describe(), results_dir / "model_load.json")
+                          min_pixels=base.min_pixels, max_pixels=base.max_pixels,
+                          vision_dtype=getattr(torch, args.vision_dtype))
+    if not args.tag:
+        write_json(runner.describe(), results_dir / "model_load.json")
     n_label = args.n if args.limit is None else args.limit
+    wanted = None
+    if args.ids_file:
+        wanted = {line.strip() for line in open(args.ids_file, encoding="utf-8") if line.strip()}
     for ds in args.datasets:
         samples = load_manifest(manifest_path(ds, args.n))
         if args.limit:
             samples = samples[: args.limit]
+        if wanted is not None:
+            samples = [s for s in samples if s.sample_id in wanted]
+            if not samples:
+                continue
         ids = {s.sample_id for s in samples}
         warm = warmup_set(ds, ids, base.warmup) or samples[: base.warmup]
         if warm and warm[0].sample_id in ids:

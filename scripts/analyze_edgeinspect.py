@@ -101,17 +101,23 @@ def fig_memory_scaling(mem: pd.DataFrame, out: Path) -> None:
     _style()
     fig, ax = plt.subplots(figsize=(6.8, 4.3))
     sub = mem[mem["attention_backend"] == "sdpa"] if "attention_backend" in mem else mem
+    top = max(DEVICE_MB * 1.08, float(sub["device_footprint_mb"].max()) * 1.05)
     for r, g in sub.groupby("retention"):
         g = g.sort_values("k")
-        ok = g[g["status"] == "ok"]
+        ok = g[g["status"].isin(["ok", "over_vram"])]
         ax.plot(ok["k"], ok["device_footprint_mb"], color=R_COLORS.get(r, INK2), marker=MARKERS.get(r, "o"),
                 markeredgecolor="#fcfcfb", label=f"{int(r * 100)}% tokens")
+        over = g[g["status"] == "over_vram"]
+        if len(over):
+            ax.scatter(over["k"], over["device_footprint_mb"], s=150, facecolors="none", edgecolors="#d03b3b",
+                       linewidths=1.2, zorder=5)
         oom = g[g["status"] == "OOM"]
         if len(oom):
-            ax.scatter(oom["k"], [DEVICE_MB * 1.01] * len(oom), marker="x", s=60, color=R_COLORS.get(r, INK2), zorder=5)
+            ax.scatter(oom["k"], [top * 0.97] * len(oom), marker="x", s=60, color=R_COLORS.get(r, INK2), zorder=5)
     ax.axhline(DEVICE_MB, color="#d03b3b", lw=1.2, ls="--")
-    ax.text(ax.get_xlim()[0], DEVICE_MB, " 8 GB device limit (x = OOM)", color="#d03b3b", fontsize=7.5, va="bottom")
-    ax.set_ylim(0, DEVICE_MB * 1.08)
+    ax.text(ax.get_xlim()[0], DEVICE_MB, " 8 GB device (red ring = exceeds VRAM, spilled to system RAM; x = OOM)",
+            color="#d03b3b", fontsize=7, va="bottom")
+    ax.set_ylim(0, top)
     ax.set_xlabel("number of normal reference images k")
     ax.set_ylabel("device VRAM footprint (MB)\npeak reserved + CUDA context/other processes")
     ax.legend(fontsize=8)
@@ -203,7 +209,7 @@ def main() -> None:
     tab["vram_mb"] = tab["peak_allocated_mb_max"]
     tab["vram_source"] = "peak allocated (interleaved run)"
     if not mem.empty:
-        m = mem[(mem["status"] == "ok") & (mem.get("attention_backend", "sdpa") == "sdpa")]
+        m = mem[(mem["status"].isin(["ok", "over_vram"])) & (mem.get("attention_backend", "sdpa") == "sdpa")]
         m = m.groupby(["k", "retention"])["device_footprint_mb"].max().rename("device_footprint_mb").reset_index()
         tab = tab.merge(m, on=["k", "retention"], how="left")
         has = tab["device_footprint_mb"].notna()
