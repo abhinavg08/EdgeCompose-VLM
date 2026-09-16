@@ -21,7 +21,12 @@ applies the stack to few-shot industrial inspection on MVTec LOCO AD.
   measured crossover (M = 64) turned the same pruning into a **27.8% end-to-end speedup at
   99.6% of baseline accuracy** (and −27% energy).
 * **Quality:** TextVQA keeps 99.7 / 97.0 / 83.3% of accuracy at 75 / 50 / 25% visual tokens;
-  POPE is unchanged within noise. VisionZip beats uniform subsampling only at 25% (+6.8 pp).
+  POPE is unchanged within noise. VisionZip beats uniform subsampling on TextVQA (+2.5 pp at
+  50%, +8.1 pp at 25%, overflow-free samples).
+* **Erratum (found and fixed):** with an fp16 vision tower, 3.2% of TextVQA images overflow in
+  the last ViT block and produce `!!!!` in every config; the vision tower now runs in bf16
+  (validated: 16 → 0 failures, healthy answers 96% identical). Corrected accuracies are ~2.5 pp
+  higher; relative conclusions are unchanged ([report erratum](report/edgecompose_report.md#erratum--fp16-overflow-in-the-vision-tower-found-after-the-final-sweep)).
 * **Bottleneck shift:** after pruning, the vision encoder is the largest stage (37% → 53% of
   latency); decode is ~64 ms/token regardless of prompt length.
 * **Pareto front** = tuned AWQ dispatch + VisionZip only (T1/T2/T3); the baseline and all eager
@@ -139,7 +144,12 @@ python scripts/run_sweep.py --sweep sweep_main.yaml --n 200
 # AWQ kernel crossover microbenchmark (-> tuned dispatch threshold 64)
 python scripts/awq_kernel_bench.py
 # FINAL matrix: 14 configs x 500 samples/dataset (prefix of the 1000-sample manifests), ~4.5 h
+# (the reported run used an fp16 vision tower; benchmark.py now defaults to bf16 - pass
+#  --vision-dtype float16 to benchmark.py to reproduce the reported numbers exactly)
 python scripts/run_sweep.py --sweep sweep_final.yaml --n 1000 --limit 500
+# erratum validation (bf16 vision tower) and corrected quality
+python scripts/benchmark.py --configs baseline.yaml tuned_token_75.yaml token_25.yaml uniform_25.yaml --datasets textvqa --n 1000 --limit 500 --ids-file results/aggregate/bf16_validation_ids.txt --vision-dtype bfloat16 --tag visionbf16 --no-power
+python scripts/compare_vision_dtype.py
 # decode profiling (force 32 new tokens) and run-to-run variability (3 repeats)
 python scripts/benchmark.py --configs baseline.yaml token_25.yaml eager_baseline.yaml eager_token_25.yaml tuned_baseline.yaml tuned_token_25.yaml --datasets textvqa --n 200 --limit 40 --ignore-eos --tag decode32 --no-power
 python scripts/benchmark.py --configs baseline.yaml token_50.yaml token_25.yaml eager_baseline.yaml tuned_baseline.yaml tuned_token_50.yaml --datasets textvqa pope --n 200 --limit 40 --repeats 3 --tag rep --no-power
@@ -220,7 +230,8 @@ Measured facts (M) are separated from explanations (E); see the report for detai
    a fused Triton GEMM that is 2.6x slower at this size (Fig 9, 10).
 2. **(M) Benefits are entirely in prefill.** Vision time changes by ≤1%, decode stays ~64
    ms/token (independent of KV length 278-993); prefill falls up to 74%.
-3. **(M) Aggressive reduction hurts TextVQA disproportionately** (−12.9 pp at 25%) while POPE
+3. **(M) Aggressive reduction hurts TextVQA disproportionately** (−12.9 pp at 25%; −13.3 pp on
+   overflow-free samples) while POPE
    is flat (−1.2 pp, n.s.); POPE precision stays ≈0.90 and the yes-ratio falls slightly
    (0.444 → 0.428): no sign of more hallucination.
 4. **(M) SDPA x VisionZip compose additively** (disjoint stages: vision vs prefill;
@@ -280,4 +291,25 @@ Full list: [report §6](report/edgecompose_report.md#6-limitations).
 * TextVQA: Singh et al., CVPR 2019 (lmms-lab/textvqa release); POPE: Li et al., EMNLP 2023 (lmms-lab/POPE).
 * MVTec LOCO AD: Bergmann et al., IJCV 2022 (CC BY-NC-SA 4.0).
 
-<!-- EDGEINSPECT -->
+---
+
+# EdgeInspect-VLM
+
+**Few-shot industrial visual inspection with efficient VLMs on a memory-constrained GPU.**
+EdgeInspect reuses the EdgeCompose stack (Qwen2.5-VL-3B-AWQ, SDPA, tuned AWQ dispatch,
+VisionZip, stage profiling) to decide whether a product image from **MVTec LOCO AD** is
+NORMAL or ANOMALOUS given k known-good reference images, and studies how the reference count
+k ∈ {1, 2, 4, 8} trades off against visual-token retention r ∈ {100, 75, 50, 25}% in
+quality, latency and VRAM on the 8 GB RTX 4060.
+
+```mermaid
+flowchart LR
+    R["k references<br/>(train/good, seeded, nested in k)"] --> P["prompt: text + 'Reference i (known-good):' img ... 'Query image:' img"]
+    Q["query (test: good / logical / structural)"] --> P
+    P --> V["ViT per image"] --> Z["VisionZip per image<br/>(same r for all images)"] --> F["LLM prefill"]
+    F --> A["Stage A: greedy NORMAL/ANOMALOUS<br/>+ exact log P(NORMAL), log P(ANOMALOUS)"]
+    A -->|ANOMALOUS| B["Stage B: JSON explanation<br/>(type, issue, explanation)"]
+    A --> M["metrics: AUROC, calibrated F1, per anomaly type<br/>+ TTFT / latency / VRAM"]
+```
+
+<!-- EDGEINSPECT-RESULTS -->

@@ -284,6 +284,39 @@ configuration**, independent of KV length (278 vs 993 tokens) and attention back
 
 AutoAWQ uses the fused kernel for M < 1024 — 2.6x slower than the alternative at M ≈ 1000.
 
+### Erratum — fp16 overflow in the vision tower (found after the final sweep)
+**M.** In the reported sweeps the vision tower ran in float16 (the LLM must be float16 for the
+AWQ kernels). For 16 of the 500 TextVQA images (3.2%; none on POPE) the residual stream of
+the last ViT block (block 31) exceeds the float16 range → Inf → NaN, and the model emits
+`!!!!` in every configuration (only 12 and 9 of them under uniform subsampling, which drops
+some of the offending tokens). A paired re-run of 100 samples (the 16 + 84 random) with the
+vision tower in **bfloat16** — the checkpoint's native dtype; the ViT is not quantized —
+removes all 16 failures (C0 accuracy on them 0.0 → 0.806), leaves healthy samples
+essentially unchanged (0.790 → 0.798, 96% identical answers) and changes neither vision
+time (395 → 385 ms) nor peak memory (±3 MB) materially (`results/aggregate/vision_dtype_erratum.csv`).
+The code default is now a bfloat16 vision tower (`--vision-dtype float16` reproduces the
+reported sweep).
+
+**Corrected TextVQA quality** (final sweep, the 484 samples on which no configuration
+overflowed, paired; `results/aggregate/textvqa_quality_clean484.csv`):
+
+| Config | Reported (n=500) | Corrected (n=484) | Kept vs C0 | Δ vs C0 (pp) [95% CI] |
+|---|---|---|---|---|
+| C0 SDPA 100% | 0.775 | 0.800 | 100% | — |
+| C1 VZ 75% | 0.772 | 0.798 | 99.7% | −0.2 [−1.6, +1.1] |
+| C2 VZ 50% | 0.752 | 0.776 | 97.0% | −2.4 [−4.2, −0.5] |
+| C3 VZ 25% | 0.646 | 0.667 | 83.3% | −13.3 [−16.4, −10.3] |
+| T1 tuned VZ 75% | 0.772 | 0.797 | 99.6% | −0.3 [−1.6, +1.0] |
+| T2 tuned VZ 50% | 0.750 | 0.775 | 96.9% | −2.5 [−4.4, −0.7] |
+| U2 uniform 50% | 0.733 | 0.751 | 93.9% | −4.9 [−7.1, −2.7] |
+| U3 uniform 25% | 0.578 | 0.586 | 73.2% | −21.5 [−25.4, −17.6] |
+
+Absolute TextVQA accuracy rises by ~2.5 pp for every configuration and all relative
+conclusions stand. The one comparison the bug biased is VisionZip vs uniform (uniform
+failed on fewer samples): on clean samples VisionZip leads by **+2.5 pp [+0.1, +5.2] at 50%**
+(previously reported as not significant) and **+8.1 pp [+3.7, +12.3] at 25%**. Latency,
+memory and energy results are unaffected (the NaN samples take the same compute path).
+
 ### Figures
 Fig. 1 quality vs latency (`plots/fig1_quality_vs_latency_500.png`), Fig. 2 quality vs memory,
 Fig. 3 stage-wise latency, Fig. 4 retention vs quality, Fig. 5 retention vs TTFT, Fig. 6
@@ -300,9 +333,10 @@ where relevant, **speculation (S)**.
 (Δ −0.2 pp, CI [−1.6, +1.1]), 97.0% at 50% (−2.3 pp, significant) and 83.3% at 25% (−12.9 pp).
 On POPE, accuracy is unchanged within noise at every ratio (98.6-100.2%, all CIs include 0).
 TextVQA is therefore disproportionately hurt by aggressive reduction. VisionZip's attention-
-based selection matters at 25%: it beats uniform subsampling by +6.8 pp on TextVQA (CI
-[+2.5, +11.1]); at 50% (+1.8 pp) and on POPE the difference is not significant, and on the
-200-sample development subset it was not visible at all.
+based selection pays off on TextVQA: on the overflow-free samples (erratum) it beats uniform
+subsampling by +2.5 pp [+0.1, +5.2] at 50% and +8.1 pp [+3.7, +12.3] at 25%; on POPE the
+difference is not significant, and on the 200-sample development subset it was not visible
+at all — a reminder that small dev sets can hide real effects.
 **E.** Reading text needs small, high-resolution regions; once those tokens are dropped the
 answer cannot be recovered, whereas POPE's object-presence questions tolerate coarse
 evidence. Qwen2.5-VL's PatchMerger already fuses 2x2 patches, so each remaining token is
@@ -437,7 +471,10 @@ machine-state dependent.
 10. **Memory.** Peak *allocated* memory is per query; the device footprint (isolated pass) adds
    the CUDA context *and other processes on the GPU* (~1.1 GB here, including a browser),
    so footprints are machine-state dependent.
-11. **Host environment.** Experiments ran in a pre-existing conda environment (at the user's
+11. **fp16 vision tower in the reported sweeps.** 3.2% of TextVQA images overflowed in the last
+   ViT block and failed in every configuration; corrected numbers on overflow-free samples are
+   given in the erratum (Section 4). A full re-run with the bf16 vision tower was not done.
+12. **Host environment.** Experiments ran in a pre-existing conda environment (at the user's
    request) with small, documented additions and two workarounds (AutoAWQ symbol alias,
    MKL threading layer); `requirements-lock.txt` records the exact package set.
 

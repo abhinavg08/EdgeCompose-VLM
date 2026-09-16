@@ -91,6 +91,20 @@ User request (2026-09-30 17:16): after EdgeCompose completes end to end, build E
   (to be confirmed by A3 timing probe).
 - Next: A0 (re-run smoke_test.py), A1 prepare_loco.py, A3 inspect_smoke_test.py --probe, A4, A5.
 
+## ERRATUM (2026-09-30 20:30): fp16 vision-tower overflow
+- Symptom: `!!!!` outputs (NaN logits) for 16/500 TextVQA images in all EdgeCompose configs
+  (9-12 for uniform), and for some splicing_connectors images in EdgeInspect dev.
+- Root cause (`scripts/debug_overflow.py`): first non-finite activation in ViT block 31 (fp16
+  residual stream > 65504). Fix: vision tower in bfloat16 (checkpoint dtype; ViT not quantized),
+  LLM stays fp16 for AWQ. `QwenVLRunner(vision_dtype=torch.bfloat16)` is now the default.
+- Validation (`--tag visionbf16`, `scripts/compare_vision_dtype.py`): 16 -> 0 failures, healthy
+  answers 96% identical, vision time 395 -> 385 ms, memory unchanged.
+- EdgeCompose final sweep NOT re-run; corrected TextVQA quality on the 484 overflow-free samples in
+  `results/aggregate/textvqa_quality_clean484.csv` + report erratum. Conclusions unchanged; VisionZip
+  vs uniform at 50% becomes significant (+2.5 pp).
+- EdgeInspect: all final runs use the bf16 vision tower (dev grid pushpins unaffected; splicing dev
+  had 4 affected queries, documented).
+
 ## Open items
 - Ollama (user has it) not usable for the core study (GGUF engine: no token pruning/backend switch/stage timing);
   listed as possible external reference in future work.
