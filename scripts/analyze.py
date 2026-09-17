@@ -42,6 +42,8 @@ _PCT_LIKE = ("_pct", "reduction", "retention_pct")
 
 
 def _fmt_for(col: str, default: str) -> str:
+    if col in ("retention", "token_retention", "achieved_retention"):
+        return ".2f"
     if any(k in col for k in _PCT_LIKE):
         return ".1f"
     if any(k in col for k in _MS_LIKE):

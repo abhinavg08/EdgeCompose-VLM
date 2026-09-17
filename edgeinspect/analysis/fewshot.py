@@ -75,6 +75,8 @@ def per_config(df: pd.DataFrame) -> pd.DataFrame:
             row["total_latency_ms_p95"] = float(ok["total_latency_ms"].quantile(0.95))
             row["peak_allocated_mb_p50"] = float(ok["peak_allocated_mb"].median())
             row["peak_allocated_mb_max"] = float(ok["peak_allocated_mb"].max())
+            # meaningful per config because the runner releases the allocator cache before each query
+            row["peak_reserved_mb_max"] = float(ok["peak_reserved_mb"].max())
             row["visual_tokens_before"] = float(ok["visual_tokens_before"].mean())
             row["visual_tokens_after"] = float(ok["visual_tokens_after"].mean())
             row["prefill_seq_len"] = float(ok["prefill_seq_len"].mean())
@@ -101,8 +103,9 @@ def macro(pc: pd.DataFrame) -> pd.DataFrame:
 
 def across_seeds(mac: pd.DataFrame) -> pd.DataFrame:
     """Mean and std over reference seeds per (k, r)."""
-    keys = [c for c in QUALITY_KEYS + ["ttft_ms_p50", "total_latency_ms_p50", "prefill_ms_p50", "peak_allocated_mb_max",
-                                       "peak_allocated_mb_p50", "visual_tokens_after", "energy_j_median"] if c in mac]
+    keys = [c for c in QUALITY_KEYS + ["ttft_ms_p50", "total_latency_ms_p50", "prefill_ms_p50", "vision_ms_p50",
+                                       "peak_allocated_mb_max", "peak_reserved_mb_max", "peak_allocated_mb_p50",
+                                       "visual_tokens_after", "energy_j_median", "total_latency_ms_p95"] if c in mac]
     g = mac.groupby(["k", "retention"])
     mean = g[keys].mean()
     std = g[keys].std(ddof=1).add_suffix("_std")

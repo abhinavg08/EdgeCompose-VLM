@@ -115,8 +115,8 @@ def fig_memory_scaling(mem: pd.DataFrame, out: Path) -> None:
         if len(oom):
             ax.scatter(oom["k"], [top * 0.97] * len(oom), marker="x", s=60, color=R_COLORS.get(r, INK2), zorder=5)
     ax.axhline(DEVICE_MB, color="#d03b3b", lw=1.2, ls="--")
-    ax.text(ax.get_xlim()[0], DEVICE_MB, " 8 GB device (red ring = exceeds VRAM, spilled to system RAM; x = OOM)",
-            color="#d03b3b", fontsize=7, va="bottom")
+    ax.text(ax.get_xlim()[1], DEVICE_MB * 0.985, "8 GB device  |  red ring = exceeds VRAM (spilled to system RAM)  ",
+            color="#d03b3b", fontsize=7, va="top", ha="right")
     ax.set_ylim(0, top)
     ax.set_xlabel("number of normal reference images k")
     ax.set_ylabel("device VRAM footprint (MB)\npeak reserved + CUDA context/other processes")
@@ -254,7 +254,24 @@ def main() -> None:
         if not oom.empty:
             f.write("## OOM counts (OOM / attempted queries)\n\n" + md(oom.reset_index().fillna("-")) + "\n")
         if not mem.empty:
-            f.write("\n\n## Isolated memory scaling\n\n" + md(mem, ".1f") + "\n")
+            feas_rows = []
+            for (attn, r), g in mem.groupby(["attention_backend", "retention"]):
+                okk = g[g["status"] == "ok"]
+                bad = g[g["status"] != "ok"]
+                feas_rows.append({"attention": attn, "retention": r,
+                                  "max_k_within_vram": int(okk["k"].max()) if len(okk) else 0,
+                                  "footprint_at_max_k_mb": float(okk.loc[okk["k"].idxmax(), "device_footprint_mb"]) if len(okk) else float("nan"),
+                                  "latency_at_max_k_ms": float(okk.loc[okk["k"].idxmax(), "latency_ms_median"]) if len(okk) else float("nan"),
+                                  "first_failing_k": int(bad["k"].min()) if len(bad) else None,
+                                  "latency_first_failing_ms": float(bad.loc[bad["k"].idxmin(), "latency_ms_median"]) if len(bad) and bad["latency_ms_median"].notna().any() else float("nan")})
+            f.write("\n\n## Max reference count within 8 GB VRAM (isolated probe, pushpins)\n\n" + md(pd.DataFrame(feas_rows), ".1f") + "\n")
+            # isolated vs interleaved latency for the same (k, r)
+            iso = mem[mem["attention_backend"] == "sdpa"][["k", "retention", "latency_ms_median", "device_footprint_mb", "status"]]
+            cmp_ = tab[["k", "retention", "total_latency_ms_p50"]].merge(iso, on=["k", "retention"], how="inner")
+            if len(cmp_):
+                cmp_["interleaved_over_isolated"] = cmp_["total_latency_ms_p50"] / cmp_["latency_ms_median"]
+                f.write("\n## Latency: interleaved grid (all categories) vs isolated probe (pushpins)\n\n" + md(cmp_, ".2f") + "\n")
+            f.write("\n\n## Isolated memory scaling (all points)\n\n" + md(mem, ".1f") + "\n")
     logger.info("wrote %s", AGG / f"{args.tag}_tables.md")
 
     t = args.tag

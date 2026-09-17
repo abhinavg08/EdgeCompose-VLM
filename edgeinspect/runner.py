@@ -116,6 +116,7 @@ def run_category(
         for k, r in configs:
             if oom_count[(k, r)] >= cfg.oom_skip_after:
                 continue
+            torch.cuda.empty_cache()
             res = classify(runner, category, ref_imgs_all[:k], vi, build_compressor(cfg.token_method, r),
                            cfg.compress_query, cfg.max_new_tokens)
             if res["status"] == "OOM":
@@ -148,6 +149,12 @@ def run_category(
                 continue
             if qimg is None:
                 qimg = load_image(q)
+            # Release the caching allocator's pool before every query (outside the timed region).
+            # Without this, blocks cached by large configs (k=8, 100%) grow the process's reserved
+            # pool past the 8 GB card (10.7 GB observed); on Windows the excess silently spills to
+            # system RAM and slows *other* configurations. Per-query release makes each config's
+            # footprint and any VRAM overflow attributable to that config (per-request deployment).
+            torch.cuda.empty_cache()
             if power is not None:
                 power.start()
             res = classify(runner, category, ref_imgs_all[:k], qimg, build_compressor(cfg.token_method, r),
