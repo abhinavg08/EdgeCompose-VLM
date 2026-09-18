@@ -1,2 +1,2 @@
 k,retention,f1,total_latency_ms_p50,vram_mb,visual_tokens_after,front_q_lat,front_q_vram,front_q_tokens,front_q_lat_vram
-1,0.5,0.7814432989690723,946.2222249999784,3442.04345703125,502.0,True,True,True,True
+1,0.5,0.7814432989690723,946.2222249999784,4792.5,502.0,True,True,True,True
