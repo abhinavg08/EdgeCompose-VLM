@@ -312,4 +312,36 @@ flowchart LR
     A --> M["metrics: AUROC, calibrated F1, per anomaly type<br/>+ TTFT / latency / VRAM"]
 ```
 
+### Protocol
+
+* **Data:** MVTec LOCO AD (5 categories, original splits/labels; CC BY-NC-SA 4.0). References from
+  `train/good` (seeded, nested in k, saved manifests; identical for every retention), warmup and
+  calibration from `validation/good`, queries from `test` (20 good + 10 logical + 10 structural
+  per category).
+* **Stack:** EdgeCompose's Pareto-optimal setting — AWQ INT4 LLM, bf16 vision tower, SDPA, AWQ
+  dispatch threshold 64 — with VisionZip applied per image; ≤512 visual tokens per image.
+* **Stage A (benchmarked):** one-word answer NORMAL/ANOMALOUS (2-4 decode tokens) plus the exact
+  answer likelihoods → score = log P(ANOMALOUS) − log P(NORMAL) (a ranking score, not a
+  calibrated probability; scoring time is excluded from latency).
+* **Decision threshold:** 90th percentile of the score on 10 normal *validation* images per
+  (category, k, r) — no anomalous image is used for any threshold or prompt choice.
+* **Stage B (not in benchmark latency):** JSON `{status, anomaly_type, issue, explanation}` for
+  queries classified ANOMALOUS.
+* **Metrics:** AUROC, calibrated F1 / balanced accuracy, raw greedy F1, F1-max, per anomaly type;
+  TTFT, latency, stage times, peak VRAM (per query) and isolated device footprint vs k.
+
+### Commands
+
+```powershell
+python scripts/prepare_loco.py                     # extract archive, statistics, reference/query manifests
+python scripts/inspect_smoke_test.py --probe       # A3: 1-shot pushpins example + k/r timing probe
+python scripts/run_edgeinspect.py --categories pushpins --ks 1 --retentions 1.0 --queries dev --limit 40 --tag a4
+python scripts/run_edgeinspect.py --categories pushpins splicing_connectors --ks 1 4 --retentions 1.0 0.5 --queries dev --limit 60 --tag dev
+python scripts/run_edgeinspect_sweep.py            # memory scaling (k up to 24) + full grid + seeds 1-2 + eager probe
+python scripts/analyze_edgeinspect.py --tag final --main
+python scripts/edgeinspect_examples.py --k 4 --retention 1.0
+python scripts/optimize.py --task industrial_inspection --max-vram-mb 7000 --max-latency-ms 2000 --min-f1 0.60
+python scripts/inspect_demo.py --category pushpins --references 4 --token-retention 0.50 --query <path/to/image.png>
+```
+
 <!-- EDGEINSPECT-RESULTS -->
