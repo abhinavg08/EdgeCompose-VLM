@@ -53,6 +53,30 @@ def auroc(y_true: Sequence[int], scores: Sequence[float]) -> float:
     return float((ranks[y == 1].sum() - pos * (pos + 1) / 2) / (pos * neg))
 
 
+def auprc(y_true: Sequence[int], scores: Sequence[float]) -> float:
+    """Average precision (area under the precision-recall curve, step interpolation)."""
+    y = np.asarray(y_true, dtype=int)
+    s = np.asarray(scores, dtype=float)
+    pos = int((y == 1).sum())
+    if pos == 0:
+        return float("nan")
+    order = np.argsort(-s, kind="mergesort")
+    y_sorted, s_sorted = y[order], s[order]
+    ap, tp, prev_recall = 0.0, 0, 0.0
+    i = 0
+    while i < len(s_sorted):  # process tied scores as one threshold
+        j = i
+        while j + 1 < len(s_sorted) and s_sorted[j + 1] == s_sorted[i]:
+            j += 1
+        tp += int(y_sorted[i:j + 1].sum())
+        precision = tp / (j + 1)
+        recall = tp / pos
+        ap += precision * (recall - prev_recall)
+        prev_recall = recall
+        i = j + 1
+    return float(ap)
+
+
 def f1_max(y_true: Sequence[int], scores: Sequence[float]) -> Dict[str, float]:
     """Maximum F1 over thresholds 'score >= t' for all distinct t."""
     y = np.asarray(y_true, dtype=int)
@@ -75,6 +99,7 @@ def evaluate(y_true: Sequence[int], y_pred: Sequence[int], scores: Optional[Sequ
     if have_scores:
         s = np.asarray(scores, dtype=float)
         out["auroc"] = auroc(y, s)
+        out["auprc"] = auprc(y, s)
         out.update(f1_max(y, s))
     if types is not None:
         t = np.asarray(types)
@@ -85,8 +110,10 @@ def evaluate(y_true: Sequence[int], y_pred: Sequence[int], scores: Optional[Sequ
             bm = binary_metrics(y[m], p[m])
             out[f"f1_{kind}"] = bm["f1"]
             out[f"recall_{kind}"] = bm["recall"]
+            out[f"n_{kind}"] = int((t == kind).sum())
             if have_scores:
                 out[f"auroc_{kind}"] = auroc(y[m], s[m])
+                out[f"auprc_{kind}"] = auprc(y[m], s[m])
                 out[f"f1_max_{kind}"] = f1_max(y[m], s[m])["f1_max"]
     return out
 

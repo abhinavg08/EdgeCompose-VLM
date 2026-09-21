@@ -36,6 +36,15 @@ def test_auroc_perfect_random_and_ties():
     assert math.isnan(auroc([1, 1], [0.1, 0.2]))
 
 
+def test_auprc():
+    from edgeinspect.metrics.anomaly import auprc
+    assert auprc([0, 0, 1, 1], [0.1, 0.2, 0.8, 0.9]) == pytest.approx(1.0)
+    # ranking: 1 (pos), 0 (neg), 1 (pos): AP = 1*0.5 + (2/3)*0.5
+    assert auprc([1, 0, 1], [0.9, 0.8, 0.7]) == pytest.approx(0.5 + (2 / 3) * 0.5)
+    # all tied -> precision = base rate
+    assert auprc([1, 0, 1, 0], [0.5] * 4) == pytest.approx(0.5)
+
+
 def test_f1_max_finds_best_threshold():
     r = f1_max([0, 0, 1, 1], [0.1, 0.6, 0.7, 0.9])
     assert r["f1_max"] == 1.0 and r["f1_max_threshold"] == 0.7

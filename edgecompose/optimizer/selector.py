@@ -69,9 +69,11 @@ def _table(agg: pd.DataFrame, c: Constraints) -> pd.DataFrame:
 class InspectionConstraints:
     max_vram_mb: Optional[float] = None
     max_latency_ms: Optional[float] = None
-    min_f1: Optional[float] = None
+    min_f1: Optional[float] = None  # minimum of `quality_metric`
+    min_auroc: Optional[float] = None
     min_references: Optional[int] = None
-    quality_metric: str = "f1_cal"  # f1_cal (deployable, normal-only threshold) | f1 | f1_max | auroc | ...
+    quality_metric: str = "auroc"  # auroc (discrimination) | f1_cal (normal-only threshold) | ...
+    allow_spill: bool = False  # spill/degraded configs are not viable deployment settings by default
 
 
 def select_inspection(tab: pd.DataFrame, c: InspectionConstraints, objective: str = "quality", top_k: int = 5) -> Dict:
@@ -88,8 +90,13 @@ def select_inspection(tab: pd.DataFrame, c: InspectionConstraints, objective: st
     df["config"] = df.apply(lambda r: f"k={int(r['k'])}, r={r['retention']:.2f}", axis=1)
     for _, r in df.iterrows():
         why = []
-        if not bool(r.get("feasible_all", True)):
+        residency = r.get("residency", "VRAM-resident")
+        if not bool(r.get("feasible_all", True)) or residency == "OOM/failure":
             why.append("OOM in at least one category")
+        elif residency == "spill/degraded" and not c.allow_spill:
+            why.append("exceeds 8 GB VRAM (spills to system RAM)")
+        if c.min_auroc is not None and not (r.get("auroc", float("nan")) >= c.min_auroc):
+            why.append(f"AUROC {r.get('auroc', float('nan')):.3f} < {c.min_auroc:.3f}")
         if c.max_vram_mb is not None and not (r["vram_mb"] <= c.max_vram_mb):
             why.append(f"VRAM {r['vram_mb']:.0f} MB > {c.max_vram_mb:.0f}")
         if c.max_latency_ms is not None and not (r["total_latency_ms_p50"] <= c.max_latency_ms):

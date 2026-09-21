@@ -5,8 +5,11 @@ Generic VQA (EdgeCompose, results/results.csv):
     python scripts/optimize.py --objective latency --min-quality 0.75 --datasets textvqa
 
 Industrial inspection (EdgeInspect, results/edgeinspect/aggregate/edgeinspect_results.csv):
-    python scripts/optimize.py --task industrial_inspection --max-vram-mb 7000 --max-latency-ms 2000 --min-f1 0.80
+    python scripts/optimize.py --task industrial_inspection --max-vram-mb 7000 --max-latency-ms 2000 --min-auroc 0.80
     python scripts/optimize.py --task industrial_inspection --min-references 4 --objective latency
+    python scripts/optimize.py --task industrial_inspection --objective memory --min-auroc 0.75
+Configurations whose VRAM footprint exceeds the 8 GB card (spill/degraded) or that hit OOM are
+excluded unless --allow-spill is given.
 
 --min-quality is absolute (metric units) unless --relative-quality is given, in which case
 it is the fraction of the C0 (SDPA, 100% tokens) baseline quality on each dataset.
@@ -35,29 +38,37 @@ def _inspection(args) -> None:
         sys.exit(f"{path} not found - run scripts/analyze_edgeinspect.py first")
     tab = pd.read_csv(path)
     c = InspectionConstraints(max_vram_mb=args.max_vram_mb, max_latency_ms=args.max_latency_ms, min_f1=args.min_f1,
-                              min_references=args.min_references, quality_metric=args.quality_metric)
+                              min_auroc=args.min_auroc, min_references=args.min_references,
+                              quality_metric=args.quality_metric, allow_spill=args.allow_spill)
     res = select_inspection(tab, c, args.objective, args.top_k)
     if args.json:
         print(json.dumps(res, indent=2, default=str))
         return
     q = args.quality_metric
-    print(f"task: industrial_inspection | objective: {args.objective} | quality metric: {q} (macro over categories)")
+    print(f"task: industrial_inspection | objective: {args.objective} | quality metric: {q} "
+          f"(mean over 5 MVTec LOCO categories, 200 test queries per configuration)")
     if res["best"] is None:
         print("NO FEASIBLE CONFIGURATION. Rejections:")
         for cfg, why in res["rejected"].items():
             print(f"  {cfg}: " + "; ".join(why))
         sys.exit(2)
     b = res["best"]
+    ci = f" [95% CI {b['auroc_ci_low']:.3f}-{b['auroc_ci_high']:.3f}]" if "auroc_ci_low" in b else ""
     print("RECOMMENDED:")
-    print(f"  reference count:  {int(b['k'])}")
-    print(f"  token retention:  {b['retention']:.0%} (VisionZip)")
-    print(f"  attention:        {b.get('attention_backend', 'sdpa')}")
-    print(f"  measured {q}:  {b[q]:.3f}")
-    print(f"  measured VRAM:    {b['vram_mb']:.0f} MB ({b.get('vram_source', 'peak allocated')})")
-    print(f"  measured latency: {b['total_latency_ms_p50']:.0f} ms median (TTFT {b['ttft_ms_p50']:.0f} ms)")
+    print(f"  reference count:   {int(b['k'])}")
+    print(f"  token retention:   {b['retention']:.0%} (VisionZip, per image)")
+    print(f"  attention backend: {b.get('attention_backend', 'sdpa')} (AWQ INT4, tuned dispatch, bf16 vision tower)")
+    print(f"  expected AUROC:    {b['auroc']:.3f}{ci}")
+    if "f1_cal" in b:
+        print(f"  F1 @ normal-only calibrated threshold: {b['f1_cal']:.3f}")
+    print(f"  median latency:    {b['total_latency_ms_p50']:.0f} ms (TTFT {b['ttft_ms_p50']:.0f} ms)")
+    print(f"  peak VRAM:         {b['vram_mb']:.0f} MB (device footprint incl. CUDA context)")
+    print(f"  residency:         {b.get('residency', 'n/a')}")
     print("ranking (feasible):")
     for r in res["ranking"]:
-        print(f"  {r['config']:16s} {q}={r[q]:.3f}  lat={r['total_latency_ms_p50']:6.0f} ms  vram={r['vram_mb']:6.0f} MB")
+        extra = "" if q == "auroc" else f"  {q}={r[q]:.3f}"
+        print(f"  {r['config']:16s} AUROC={r['auroc']:.3f}{extra}  lat={r['total_latency_ms_p50']:6.0f} ms  "
+              f"vram={r['vram_mb']:6.0f} MB  {r.get('residency', '')}")
     if res["rejected"]:
         print(f"rejected: {len(res['rejected'])} configs (use --json for reasons)")
 
@@ -72,9 +83,11 @@ def main() -> None:
     ap.add_argument("--max-ttft-ms", type=float, default=None)
     ap.add_argument("--min-quality", type=float, default=None)
     ap.add_argument("--relative-quality", action="store_true")
-    ap.add_argument("--min-f1", type=float, default=None, help="inspection: minimum macro quality metric")
+    ap.add_argument("--min-f1", type=float, default=None, help="inspection: minimum of --quality-metric")
+    ap.add_argument("--min-auroc", type=float, default=None, help="inspection: minimum mean AUROC")
     ap.add_argument("--min-references", type=int, default=None, help="inspection: require at least k references")
-    ap.add_argument("--quality-metric", default="f1_cal", choices=["f1_cal", "f1", "f1_max", "auroc", "balanced_accuracy_cal"])
+    ap.add_argument("--allow-spill", action="store_true", help="inspection: allow configs that exceed VRAM")
+    ap.add_argument("--quality-metric", default="auroc", choices=["auroc", "f1_cal", "auprc", "balanced_accuracy_cal"])
     ap.add_argument("--latency-stat", default="p50", choices=["p50", "p95", "mean"])
     ap.add_argument("--datasets", nargs="*", default=[])
     ap.add_argument("--top-k", type=int, default=5)

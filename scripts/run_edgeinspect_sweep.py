@@ -31,10 +31,12 @@ STEPS = {
                "--retentions", "1.0", "0.75", "0.5", "0.25"],
     "grid": [HERE / "run_edgeinspect.py", "--categories", *CATS, "--ks", "1", "2", "4", "8",
              "--retentions", "1.0", "0.75", "0.5", "0.25", "--queries", "final", "--seeds", "0", "--tag", "final"],
-    "seeds": [HERE / "run_edgeinspect.py", "--categories", *CATS, "--ks", "1", "4", "--retentions", "1.0", "0.5",
+    # reference-seed variability: low vs high k, uncompressed vs moderate vs strong compression
+    "seeds": [HERE / "run_edgeinspect.py", "--categories", *CATS, "--ks", "1", "8", "--retentions", "1.0", "0.75", "0.5",
               "--queries", "final", "--seeds", "1", "--tag", "final"],
-    "memory_eager": [HERE / "edgeinspect_memory.py", "--category", "pushpins", "--ks", "1", "2", "4", "8", "12",
-                     "--retentions", "1.0", "0.5", "--attn", "eager", "--queries", "2"],
+    # one representative eager-attention capacity check (SDPA values come from the "memory" step)
+    "memory_eager": [HERE / "edgeinspect_memory.py", "--category", "pushpins", "--ks", "4", "8",
+                     "--retentions", "1.0", "0.5", "--attn", "eager", "--queries", "2", "--stop-after", "1"],
 }
 
 
