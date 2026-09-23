@@ -1,0 +1,7 @@
+k,retention,auroc_seed0,f1_cal_seed0,auroc_structural_seed0,auroc_logical_seed0,auroc_seed1,f1_cal_seed1,auroc_structural_seed1,auroc_logical_seed1,auroc_mean,auroc_diff,f1_cal_mean,f1_cal_diff,auroc_structural_mean,auroc_structural_diff,auroc_logical_mean,auroc_logical_diff,auroc_sd_2seeds
+1,0.5,0.578,0.28901098901098904,0.5730000000000001,0.5830000000000001,,,,,,,,,,,,,
+1,0.75,0.6144999999999999,0.3692640692640693,0.611,0.618,,,,,,,,,,,,,
+1,1.0,0.5944999999999999,0.3569937309067744,0.583,0.606,,,,,,,,,,,,,
+8,0.5,0.656,0.5112707535121329,0.6460000000000001,0.6659999999999999,,,,,,,,,,,,,
+8,0.75,0.6970000000000001,0.583420411006618,0.697,0.697,,,,,,,,,,,,,
+8,1.0,0.7230000000000001,0.5861573135001127,0.7250000000000001,0.721,,,,,,,,,,,,,
