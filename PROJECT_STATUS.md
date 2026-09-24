@@ -1,110 +1,75 @@
-# PROJECT_STATUS — EdgeCompose-VLM
+# PROJECT_STATUS — EdgeCompose-VLM + EdgeInspect-VLM
 
-_Last updated: 2026-09-30 16:35 (session 1)_
+_Last updated: 2026-10-01 01:25_
 
-## Environment (fixed)
-- Python env: **`python` in the research environment** (user-designated conda env; Python 3.9.24)
-- torch 2.7.1+cu118, transformers 4.57.1, accelerate 1.10.1
-- Added to env (all `--no-deps`, torch untouched): `autoawq==0.2.9`, `triton-windows==3.3.1.post21`,
-  `zstandard`, `nvidia-ml-py`, `hf_xet`; matplotlib 3.9.4 force-reinstalled (same version).
-  Pre-change snapshot: `results/env_before_edgecompose.txt`; exact env: `requirements-lock.txt`.
-- git: portable MinGit at `git.exe` (not on PATH).
-- GPU: RTX 4060 Laptop, 8188 MB, sm_89, driver 560.94. RAM 15.7 GB.
+## Environment
+- Hardware: NVIDIA RTX 4060 Laptop GPU (8188 MB, sm_89), 15.7 GB RAM, Windows 11 (WDDM); ~1.1 GB VRAM
+  used by CUDA context + other apps.
+- Python env: `python` in the research environment (user-designated conda env, Python 3.9.24).
+- CUDA (torch build) 11.8 · PyTorch 2.7.1+cu118 · Transformers 4.57.1 · AutoAWQ 0.2.9 + triton-windows 3.3.1.
+- Added to the env (all `--no-deps`): autoawq, triton-windows, zstandard, nvidia-ml-py, hf_xet
+  (snapshot before: `results/env_before_edgecompose.txt`; exact env: `requirements-lock.txt`).
+- git: portable MinGit on PATH.
 
-## Completed stages
-- [x] **Stage 0** — `scripts/system_check.py` → `results/system_info.json`.
-- [x] **Stage 1** — `scripts/smoke_test.py` → `results/smoke_test.json`. Loop == HF generate() (pure greedy).
-- [x] **Stage 2** — manifests `data/manifests/{textvqa,pope}_{200,1000}.jsonl` (seed 1234, nested, digests in manifest_info.json).
-- [x] **Stage 3** — C0 baseline 20 → 200 samples.
-- [x] **Stage 4 (MVP)** — VisionZip 100/75/50/25 under SDPA, 200 samples/dataset.
-- [x] **Stage 5 (dev)** — eager vs SDPA x retention + uniform controls: `sweep_main.yaml`, n=200 (4000 queries, 0 failures).
-      FA2: no wheel for py3.9/torch2.7/cu118/Windows, no CUDA toolkit → documented, skipped.
-- [x] AWQ kernel microbenchmark (`scripts/awq_kernel_bench.py`) → crossover M=64; added tuned-dispatch arm T0-T3.
-- [x] Isolated memory pass (`scripts/memory_profile.py --sweep sweep_final.yaml`) → `results/aggregate/memory_isolated.csv`.
-- [x] Decode profile, 32 forced tokens, 40 TextVQA samples (`--tag decode32`).
-- [ ] Repeat pass (3x, 40 samples, `--tag rep`) — running
-- [ ] **Stage 6** — final sweep: `run_sweep.py --sweep sweep_final.yaml --n 1000 --limit 500` (14 configs, ~3.5 h)
-- [ ] Stage 7 analysis on final data (`analyze.py --n 500 --main`), Stage 8 optimizer demo, docs, CV text
+## EdgeCompose status — COMPLETE (frozen)
+- Model: Qwen2.5-VL-3B-Instruct-AWQ; quantization AWQ INT4 (LLM fp16), vision tower bf16 (default since erratum).
+- Token compression: VisionZip port (official Qwen2.5-VL logic) + uniform control; attention SDPA / eager;
+  AWQ dispatch upstream (1024) / tuned (64).
+- Profiling: stage timing, TTFT, per-query + isolated VRAM, NVML energy, decode profile, repeats.
+- Final: 14 configs x 500 TextVQA + 500 POPE (14,000 queries, 0 failures) → `results/results.csv`,
+  `results/aggregate/tables_500.md`, `plots/fig1-10`, `report/edgecompose_report.md`.
+- Erratum: fp16 ViT overflow on 16/500 TextVQA images; bf16 fix validated; corrected quality in
+  `results/aggregate/textvqa_quality_clean484.csv`.
 
-## Exact commands
-```
-$py = "python"
-& $py scripts/run_sweep.py --sweep sweep_main.yaml --n 200                     # dev (done)
-& $py scripts/awq_kernel_bench.py                                              # done
-& $py scripts/memory_profile.py --sweep sweep_final.yaml --n 200 --k 10        # done
-& $py scripts/benchmark.py --configs baseline.yaml token_25.yaml eager_baseline.yaml eager_token_25.yaml tuned_baseline.yaml tuned_token_25.yaml --datasets textvqa --n 200 --limit 40 --ignore-eos --tag decode32 --no-power   # done
-& $py scripts/benchmark.py --configs baseline.yaml token_50.yaml token_25.yaml eager_baseline.yaml tuned_baseline.yaml tuned_token_50.yaml --datasets textvqa pope --n 200 --limit 40 --repeats 3 --tag rep --no-power
-& $py scripts/run_sweep.py --sweep sweep_final.yaml --n 1000 --limit 500      # final
-& $py scripts/analyze.py --n 200 ; & $py scripts/analyze.py --n 500 --main
-```
+## EdgeInspect status
+- Dataset: MVTec LOCO AD extracted (1,568 test images; verified counts) ✔
+- Reference sampler + 70 manifests (nested in k, deterministic) ✔
+- Classification (Stage A) + exact answer-likelihood score + normal-only calibration ✔
+- Evaluation: AUROC (primary), AUPRC, calibrated operating point, per-type, bootstrap + paired CIs ✔
+- Memory-scaling probe (k up to 24): max resident k = 4/8/12/16 at 100/75/50/25% ✔
+- Full grid (seed 0): 5 cats x k{1,2,4,8} x r{100,75,50,25} x 50 rows = 4,000 rows, 0 failures ✔
+  archived read-only: `results/edgeinspect/raw/archive_final_grid_seed0_2026-10-01/` (SHA256SUMS.txt)
+- Seed variability (seed 1: k{1,8} x r{100,75,50}): RUNNING
+- Eager-attention capacity check (k{4,8} x r{100,50}): queued after seeds
+- Optimizer (`--task industrial_inspection`, `--min-auroc`, residency-aware): implemented ✔; example outputs pending
+- Demo (`scripts/inspect_demo.py`): implemented ✔; real run pending (GPU busy)
+- Qualitative examples (`scripts/edgeinspect_examples.py`): implemented ✔; run pending
+- Report `report/edgeinspect_report.md`: drafted with final seed-0 numbers; seed/eager/demo/examples markers pending
+- README: restructured (combined); pending markers
 
-## Key measured findings so far (dev, n=200 unless noted)
-- Stage split (TextVQA, ~1000 visual tokens, SDPA): vision ~430-460 ms, prefill ~430 ms, decode 2-4 tokens.
-- AutoAWQ dispatch: M<1024 → Triton split-K GEMM (slow), M≥1024 → dequant+cuBLAS. Whole-LLM linear time
-  at M=1023: 646 ms fused vs 245 ms dequant (2.6x). Consequence: VisionZip 75% (≈780 tokens) prefill is
-  SLOWER than 100% (≈1040 tokens). Tuned threshold 64 removes the inversion (T-arm).
-- Decode ≈ 63 ms/token independent of KV length (278 vs 993) and attention backend → no decode benefit
-  from token compression at these lengths.
-- Eager attention: +~330 ms vision encoder and +1.9 GB peak alloc on TextVQA (5.39 vs 3.53 GB);
-  token compression changes peak VRAM by < 75 MB (peak is in the vision encoder).
+## Current blocker
+None. Waiting for GPU jobs (seed 1 ≈ 02:50, then eager check ≈ 5 min).
 
-## Major decisions
-1. **Env**: user's conda env (user instruction), only no-deps additions.
-2. **AWQ on transformers 4.57**: alias `PytorchGELUTanh` (edgecompose/compat.py). triton-windows for kernels.
-3. **Attention**: no SDPA-flash on Windows cu118 (SDPA = mem-efficient kernel); FA2 impossible here →
-   attention axis = eager vs SDPA, switched in place via `set_attn_implementation`.
-4. **VisionZip**: faithful port of the official Qwen2.5-VL selection logic (fallback step 2).
-5. **Own generation loop**; pure greedy (checkpoint repetition_penalty=1.05 disabled for all configs).
-6. **Pixel budget**: 256–1024 visual tokens/image.
-7. **Downloads** via curl (`scripts/download_assets.py`) — huggingface_hub stalled.
-8. **Interleaved measurement** of all configs per sample (rotated order).
-9. **Energy** = NVML sampled power × time (counter over-reports on this laptop GPU).
-10. **VRAM**: per-query peak *allocated* for tables; isolated pass for device footprint.
-11. **MKL_THREADING_LAYER=SEQUENTIAL** — env's MKL Intel-OpenMP layer crashes numpy BLAS (0xc06d007f).
-12. **Tuned AWQ dispatch (threshold 64)** added as a measured, configuration-level knob (not a new kernel).
-13. Final sweep at 500 samples/dataset (prefix of the 1000 manifests) to bound runtime (~3.5 h).
+## Last successful command
+`python scripts/analyze_edgeinspect.py --tag final --main`
 
-## Failed approaches
-- `pip install --dry-run autoawq` hung resolving a torch pin → `--no-deps`.
-- `snapshot_download` (HTTP, hf_xet) stalled at 0 bytes → curl downloader.
-- SDPA FlashAttention backend: "Torch was not compiled with flash attention".
-- flash-attn: no binary wheel; no nvcc to build.
-- NVML energy counter: implausible (>TGP) for sub-second windows.
-- matplotlib crash traced to MKL OpenMP layer, not matplotlib (reinstall did not help).
+## Last experiment
+EdgeInspect full grid, seed 0 (finished 01:09); seed-1 variability run started 01:09.
 
-## EdgeInspect-VLM (continuation; starts after EdgeCompose final analysis)
-User request (2026-09-30 17:16): after EdgeCompose completes end to end, build EdgeInspect-VLM
-(few-shot industrial inspection on MVTec LOCO AD) inside this repo, build order A0-A10.
-- Dataset: MVTec LOCO AD (CC BY-NC-SA 4.0) downloading to `hf_assets/mvtec_loco/` from the
-  official MVTec mydrive link; extraction deferred until the GPU sweep ends (CPU-heavy).
-- Code written (CPU-only, while the GPU sweep runs):
-  `edgeinspect/{datasets/mvtec_loco.py, references/sampler.py, prompts/inspection.py,
-  inference/classify.py, inference/explain.py, metrics/anomaly.py, analysis/fewshot.py, runner.py}`,
-  scripts `prepare_loco.py, inspect_smoke_test.py, run_edgeinspect.py, edgeinspect_memory.py,
-  inspect_demo.py` (NOT inspect.py: that name shadows the stdlib `inspect` module), optimizer
-  `--task industrial_inspection`. Tests: 43 passing.
-- Runner generalized: `QwenVLRunner.run_images()` (multi-image, per-image VisionZip with
-  per-image attention statistics, optional query exemption, exact class-likelihood scoring on a
-  cropped KV cache, timed separately). `run()` is now a wrapper → re-verify EdgeCompose smoke test.
-- Design: references from train/good only, nested in k per seed; queries stratified from test;
-  SDPA + tuned AWQ dispatch (threshold 64); per-image budget default 512 visual tokens
-  (to be confirmed by A3 timing probe).
-- Next: A0 (re-run smoke_test.py), A1 prepare_loco.py, A3 inspect_smoke_test.py --probe, A4, A5.
+## Latest result files
+`results/edgeinspect/aggregate/final_tables.md`, `final_results.csv`, `final_paired_contrasts.csv`,
+`edgeinspect_results.csv` (optimizer input), `plots/edgeinspect/fig1-6`.
 
-## ERRATUM (2026-09-30 20:30): fp16 vision-tower overflow
-- Symptom: `!!!!` outputs (NaN logits) for 16/500 TextVQA images in all EdgeCompose configs
-  (9-12 for uniform), and for some splicing_connectors images in EdgeInspect dev.
-- Root cause (`scripts/debug_overflow.py`): first non-finite activation in ViT block 31 (fp16
-  residual stream > 65504). Fix: vision tower in bfloat16 (checkpoint dtype; ViT not quantized),
-  LLM stays fp16 for AWQ. `QwenVLRunner(vision_dtype=torch.bfloat16)` is now the default.
-- Validation (`--tag visionbf16`, `scripts/compare_vision_dtype.py`): 16 -> 0 failures, healthy
-  answers 96% identical, vision time 395 -> 385 ms, memory unchanged.
-- EdgeCompose final sweep NOT re-run; corrected TextVQA quality on the 484 overflow-free samples in
-  `results/aggregate/textvqa_quality_clean484.csv` + report erratum. Conclusions unchanged; VisionZip
-  vs uniform at 50% becomes significant (+2.5 pp).
-- EdgeInspect: all final runs use the bf16 vision tower (dev grid pushpins unaffected; splicing dev
-  had 4 affected queries, documented).
+## Next action
+After seed 1 + eager: re-run analysis (n_boot 1000), run demo + examples, optimizer examples, fill report/
+README markers, run tests, final commit + tag `edgecompose-edgeinspect-v1`, verify clean `git status`.
+Then STOP engineering.
 
-## Open items
-- Ollama (user has it) not usable for the core study (GGUF engine: no token pruning/backend switch/stage timing);
-  listed as possible external reference in future work.
+## Key decisions (cumulative)
+1. User conda env; no-deps additions only. 2. AutoAWQ `PytorchGELUTanh` alias. 3. SDPA (no FA2 on this
+platform); eager as the unoptimized reference. 4. VisionZip port, per-image for multi-image prompts.
+5. Own greedy loop (== generate(), repetition_penalty disabled). 6. Tuned AWQ dispatch 64 from microbenchmark.
+7. bf16 vision tower (erratum). 8. Interleaved, rotated measurement. 9. Energy = sampled NVML power x time.
+10. MKL_THREADING_LAYER=SEQUENTIAL. 11. EdgeInspect: answer-likelihood score, normal-only threshold (90th pct
+of 10 validation/good), AUROC primary. 12. Per-query allocator release; residency classes resident/spill/OOM.
+13. Seed-variability subset k{1,8} x r{100,75,50} (runtime-justified).
+
+## Failed attempts / issues found (all documented)
+- huggingface_hub downloads stalled → curl downloader. flash-attn: no wheel, no nvcc.
+- NVML energy counter implausible → sampled power. MKL OpenMP layer crashed numpy BLAS → sequential layer.
+- AutoAWQ 1024-row dispatch made pruning slower → tuned threshold.
+- fp16 ViT overflow (`!!!!`) → bf16 vision tower.
+- EdgeInspect greedy answer ~98% "ANOMALOUS" → likelihood scoring + normal-only calibration.
+- Allocator cache grew to 10.7 GB (> VRAM) in the interleaved run → per-query release; affected rows archived
+  in `results/edgeinspect/raw/archive_allocator_cache/` and excluded.
+- `scripts/inspect.py` would shadow stdlib `inspect` → `scripts/inspect_demo.py`.
