@@ -37,8 +37,21 @@ _Last updated: 2026-10-01 01:25_
 - Report `report/edgeinspect_report.md`: drafted with final seed-0 numbers; seed/eager/demo/examples markers pending
 - README: restructured (combined); pending markers
 
+## PAUSED (2026-10-01 ~01:50, at user request) — how to resume
+- Seed-1 variability run stopped mid-way: breakfast_box complete (300 rows), juice_bottle partial
+  (260/300 rows); pushpins, screw_bag, splicing_connectors not started. Runs are resumable (done rows skipped).
+- Resume (≈75 min GPU + ≈5 min eager check):
+  `python scripts/run_edgeinspect_sweep.py --steps seeds memory_eager`
+- Then: `python scripts/analyze_edgeinspect.py --tag final --main` (default n_boot 1000),
+  `python scripts/edgeinspect_examples.py`,
+  `python scripts/inspect_demo.py --category pushpins --references 4 --token-retention 0.75 --query <test image> --json-out results/edgeinspect/demo_output.json`,
+  optimizer examples (`--task industrial_inspection ...`), fill remaining `⟨EI:...⟩` markers in
+  `report/edgeinspect_report.md`, `README.md`, `report/interview_prep.md` (grep for ⟨EI), run tests
+  (update test count in README/merl_application.md), final commit + tag `edgecompose-edgeinspect-v1`,
+  check `git status` clean. Then stop engineering.
+
 ## Current blocker
-None. Waiting for GPU jobs (seed 1 ≈ 02:50, then eager check ≈ 5 min).
+None (paused by user).
 
 ## Last successful command
 `python scripts/analyze_edgeinspect.py --tag final --main`
