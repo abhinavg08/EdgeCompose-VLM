@@ -141,11 +141,7 @@ def fig3_capacity(cap: pd.DataFrame, out: Path) -> None:
     for xi, (_, r) in zip(x, c.iterrows()):
         ax.text(xi, r["max_k_within_vram"] + 0.3, f"k = {int(r['max_k_within_vram'])}\n{r['footprint_at_max_k_mb']:.0f} MB, "
                 f"{r['latency_at_max_k_ms'] / 1e3:.1f} s", ha="center", fontsize=7.5, color="#0b0b0b")
-    eager = cap[cap["attention"] == "eager"]
-    for _, r in eager.iterrows():
-        xi = list(c["retention"]).index(r["retention"]) if r["retention"] in list(c["retention"]) else None
-        if xi is not None:
-            ax.scatter(xi, r["max_k_within_vram"], marker="_", s=900, color="#0b0b0b", zorder=5, linewidths=2)
+    # eager attention was only probed at k in {4, 8}; it is reported in Table D, not drawn here
     ax.set_xticks(x)
     ax.set_xticklabels([f"{int(r * 100)}%" for r in c["retention"]])
     ax.set_xlabel("visual-token retention (VisionZip, per image)")
@@ -153,9 +149,8 @@ def fig3_capacity(cap: pd.DataFrame, out: Path) -> None:
     ax.set_ylim(0, c["max_k_within_vram"].max() + 4)
     ax.set_yticks(range(0, int(c["max_k_within_vram"].max()) + 5, 4))
     ax.set_title("Figure 3 - Maximum VRAM-resident reference count, RTX 4060 8 GB", loc="left")
-    note = "k tested: 1, 2, 4, 8, 12, 16, 24 (pushpins, SDPA; isolated runs incl. ~1.1 GB context/other processes)."
-    if len(eager):
-        note += " Black tick = eager attention."
+    note = ("k tested: 1, 2, 4, 8, 12, 16, 24 (pushpins, SDPA, deployed stack; isolated runs incl. ~1.1 GB "
+            "CUDA context/other processes).")
     fig.text(0.01, -0.03, note, fontsize=7.2, color="#898781")
     fig.tight_layout()
     fig.savefig(out, dpi=160, bbox_inches="tight")
