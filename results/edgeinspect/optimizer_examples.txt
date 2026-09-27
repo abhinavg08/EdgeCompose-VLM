@@ -1,0 +1,91 @@
+﻿$ python scripts/optimize.py --task industrial_inspection --max-vram-mb 7000 --max-latency-ms 2000 --min-auroc 0.80
+task: industrial_inspection | objective: quality | quality metric: auroc (mean over 5 MVTec LOCO categories, 200 test queries per configuration)
+NO FEASIBLE CONFIGURATION. Rejections:
+  k=1, r=0.25: AUROC 0.580 < 0.800
+  k=1, r=0.50: AUROC 0.578 < 0.800
+  k=1, r=0.75: AUROC 0.614 < 0.800
+  k=1, r=1.00: AUROC 0.594 < 0.800
+  k=2, r=0.25: AUROC 0.620 < 0.800
+  k=2, r=0.50: AUROC 0.636 < 0.800
+  k=2, r=0.75: AUROC 0.643 < 0.800
+  k=2, r=1.00: AUROC 0.636 < 0.800
+  k=4, r=0.25: AUROC 0.618 < 0.800; latency 2011 ms > 2000
+  k=4, r=0.50: AUROC 0.606 < 0.800; latency 2333 ms > 2000
+  k=4, r=0.75: AUROC 0.613 < 0.800; latency 2836 ms > 2000
+  k=4, r=1.00: AUROC 0.605 < 0.800; latency 3326 ms > 2000
+  k=8, r=0.25: AUROC 0.674 < 0.800; latency 3296 ms > 2000
+  k=8, r=0.50: AUROC 0.656 < 0.800; latency 4191 ms > 2000
+  k=8, r=0.75: AUROC 0.697 < 0.800; VRAM 7564 MB > 7000; latency 5420 ms > 2000
+  k=8, r=1.00: exceeds 8 GB VRAM (spills to system RAM); AUROC 0.723 < 0.800; VRAM 8910 MB > 7000; latency 8250 ms > 2000
+
+$ python scripts/optimize.py --task industrial_inspection --max-vram-mb 7000 --max-latency-ms 6000 --min-auroc 0.65
+task: industrial_inspection | objective: quality | quality metric: auroc (mean over 5 MVTec LOCO categories, 200 test queries per configuration)
+RECOMMENDED:
+  reference count:   8
+  token retention:   25% (VisionZip, per image)
+  attention backend: sdpa (AWQ INT4, tuned dispatch, bf16 vision tower)
+  expected AUROC:    0.674 [95% CI 0.601-0.743]
+  F1 @ normal-only calibrated threshold: 0.487
+  median latency:    3296 ms (TTFT 2900 ms)
+  peak VRAM:         5742 MB (device footprint incl. CUDA context)
+  residency:         VRAM-resident
+ranking (feasible):
+  k=8, r=0.25      AUROC=0.674  lat=  3296 ms  vram=  5742 MB  VRAM-resident
+  k=8, r=0.50      AUROC=0.656  lat=  4191 ms  vram=  6486 MB  VRAM-resident
+rejected: 14 configs (use --json for reasons)
+
+$ python scripts/optimize.py --task industrial_inspection --min-references 4 --objective latency
+task: industrial_inspection | objective: latency | quality metric: auroc (mean over 5 MVTec LOCO categories, 200 test queries per configuration)
+RECOMMENDED:
+  reference count:   4
+  token retention:   25% (VisionZip, per image)
+  attention backend: sdpa (AWQ INT4, tuned dispatch, bf16 vision tower)
+  expected AUROC:    0.618 [95% CI 0.540-0.691]
+  F1 @ normal-only calibrated threshold: 0.329
+  median latency:    2011 ms (TTFT 1619 ms)
+  peak VRAM:         5200 MB (device footprint incl. CUDA context)
+  residency:         VRAM-resident
+ranking (feasible):
+  k=4, r=0.25      AUROC=0.618  lat=  2011 ms  vram=  5200 MB  VRAM-resident
+  k=4, r=0.50      AUROC=0.606  lat=  2333 ms  vram=  5494 MB  VRAM-resident
+  k=4, r=0.75      AUROC=0.613  lat=  2836 ms  vram=  5724 MB  VRAM-resident
+  k=8, r=0.25      AUROC=0.674  lat=  3296 ms  vram=  5742 MB  VRAM-resident
+  k=4, r=1.00      AUROC=0.605  lat=  3326 ms  vram=  6212 MB  VRAM-resident
+rejected: 9 configs (use --json for reasons)
+
+$ python scripts/optimize.py --task industrial_inspection --objective memory --min-auroc 0.65
+task: industrial_inspection | objective: memory | quality metric: auroc (mean over 5 MVTec LOCO categories, 200 test queries per configuration)
+RECOMMENDED:
+  reference count:   8
+  token retention:   25% (VisionZip, per image)
+  attention backend: sdpa (AWQ INT4, tuned dispatch, bf16 vision tower)
+  expected AUROC:    0.674 [95% CI 0.601-0.743]
+  F1 @ normal-only calibrated threshold: 0.487
+  median latency:    3296 ms (TTFT 2900 ms)
+  peak VRAM:         5742 MB (device footprint incl. CUDA context)
+  residency:         VRAM-resident
+ranking (feasible):
+  k=8, r=0.25      AUROC=0.674  lat=  3296 ms  vram=  5742 MB  VRAM-resident
+  k=8, r=0.50      AUROC=0.656  lat=  4191 ms  vram=  6486 MB  VRAM-resident
+  k=8, r=0.75      AUROC=0.697  lat=  5420 ms  vram=  7564 MB  VRAM-resident
+rejected: 13 configs (use --json for reasons)
+
+$ python scripts/optimize.py --task industrial_inspection --max-latency-ms 2000
+task: industrial_inspection | objective: quality | quality metric: auroc (mean over 5 MVTec LOCO categories, 200 test queries per configuration)
+RECOMMENDED:
+  reference count:   2
+  token retention:   75% (VisionZip, per image)
+  attention backend: sdpa (AWQ INT4, tuned dispatch, bf16 vision tower)
+  expected AUROC:    0.643 [95% CI 0.565-0.714]
+  F1 @ normal-only calibrated threshold: 0.436
+  median latency:    1718 ms (TTFT 1334 ms)
+  peak VRAM:         5164 MB (device footprint incl. CUDA context)
+  residency:         VRAM-resident
+ranking (feasible):
+  k=2, r=0.75      AUROC=0.643  lat=  1718 ms  vram=  5164 MB  VRAM-resident
+  k=2, r=0.50      AUROC=0.636  lat=  1527 ms  vram=  5054 MB  VRAM-resident
+  k=2, r=1.00      AUROC=0.636  lat=  1973 ms  vram=  5326 MB  VRAM-resident
+  k=2, r=0.25      AUROC=0.620  lat=  1355 ms  vram=  4920 MB  VRAM-resident
+  k=1, r=0.75      AUROC=0.614  lat=  1257 ms  vram=  4916 MB  VRAM-resident
+rejected: 8 configs (use --json for reasons)
+

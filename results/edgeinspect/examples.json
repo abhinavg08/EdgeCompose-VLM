@@ -1,0 +1,162 @@
+[
+  {
+    "story": "easy normal",
+    "sample_id": "splicing_connectors/test/good/021",
+    "category": "splicing_connectors",
+    "label": "normal",
+    "k": 4,
+    "retention": 0.75,
+    "references": [
+      "splicing_connectors/train/good/209",
+      "splicing_connectors/train/good/341",
+      "splicing_connectors/train/good/085",
+      "splicing_connectors/train/good/206"
+    ],
+    "score_llr": -0.06367637810762972,
+    "threshold_llr": 4.883429436880396,
+    "predicted": "NORMAL",
+    "raw_answer": "NORMAL",
+    "ttft_ms": 2539.4927999986976,
+    "latency_ms": 2660.069499999736,
+    "peak_allocated_mb": 4120.7744140625,
+    "peak_reserved_mb": 4616.0,
+    "explanation": null
+  },
+  {
+    "story": "clear structural anomaly",
+    "sample_id": "breakfast_box/test/structural_anomalies/026",
+    "category": "breakfast_box",
+    "label": "structural_anomaly",
+    "k": 4,
+    "retention": 0.75,
+    "references": [
+      "breakfast_box/train/good/271",
+      "breakfast_box/train/good/248",
+      "breakfast_box/train/good/267",
+      "breakfast_box/train/good/219"
+    ],
+    "score_llr": 4.01498910819646,
+    "threshold_llr": 0.261324271315243,
+    "predicted": "ANOMALOUS",
+    "raw_answer": "ANOMALOUS",
+    "ttft_ms": 2338.026900000159,
+    "latency_ms": 2578.155000000152,
+    "peak_allocated_mb": 4085.50341796875,
+    "peak_reserved_mb": 4584.0,
+    "explanation": {
+      "raw_explanation": "{\n  \"status\": \"ANOMALOUS\",\n  \"anomaly_type\": \"logical\",\n  \"issue\": \"chocolate in the tray\",\n  \"explanation\": \"the query image has a chocolate bar in the tray, which is not present in the known-good images\"\n}",
+      "json_ok": true,
+      "status": "ANOMALOUS",
+      "anomaly_type": "logical",
+      "issue": "chocolate in the tray",
+      "explanation": "the query image has a chocolate bar in the tray, which is not present in the known-good images",
+      "explain_latency_ms": 10386.601800000002,
+      "explain_tokens": 60
+    }
+  },
+  {
+    "story": "clear logical anomaly",
+    "sample_id": "juice_bottle/test/logical_anomalies/113",
+    "category": "juice_bottle",
+    "label": "logical_anomaly",
+    "k": 4,
+    "retention": 0.75,
+    "references": [
+      "juice_bottle/train/good/307",
+      "juice_bottle/train/good/081",
+      "juice_bottle/train/good/324",
+      "juice_bottle/train/good/244"
+    ],
+    "score_llr": 4.968037931830622,
+    "threshold_llr": 4.400929396151332,
+    "predicted": "ANOMALOUS",
+    "raw_answer": "ANOMALOUS",
+    "ttft_ms": 2369.3139000001797,
+    "latency_ms": 2613.022000000456,
+    "peak_allocated_mb": 4115.59716796875,
+    "peak_reserved_mb": 4612.0,
+    "explanation": {
+      "raw_explanation": "{\n  \"status\": \"ANOMALOUS\",\n  \"anomaly_type\": \"logical\",\n  \"issue\": \"extra component\",\n  \"explanation\": \"The query image has an extra component (a banana) on the label, which is not present in the known-good references.\"\n}",
+      "json_ok": true,
+      "status": "ANOMALOUS",
+      "anomaly_type": "logical",
+      "issue": "extra component",
+      "explanation": "The query image has an extra component (a banana) on the label, which is not present in the known-good references.",
+      "explain_latency_ms": 9784.9215,
+      "explain_tokens": 61
+    }
+  },
+  {
+    "story": "improved by more references (k=1/100% -> k=8/75%)",
+    "sample_id": "screw_bag/test/logical_anomalies/041",
+    "category": "screw_bag",
+    "label": "logical_anomaly",
+    "k": 8,
+    "retention": 0.75,
+    "references": [
+      "screw_bag/train/good/133",
+      "screw_bag/train/good/107",
+      "screw_bag/train/good/047",
+      "screw_bag/train/good/310",
+      "screw_bag/train/good/017",
+      "screw_bag/train/good/233",
+      "screw_bag/train/good/025",
+      "screw_bag/train/good/084"
+    ],
+    "score_llr": 1.7962813947233371,
+    "threshold_llr": 0.9915598328050692,
+    "predicted": "ANOMALOUS",
+    "raw_answer": "ANOMALOUS",
+    "ttft_ms": 4615.807099999074,
+    "latency_ms": 4854.039199999534,
+    "peak_allocated_mb": 5372.29541015625,
+    "peak_reserved_mb": 6226.0,
+    "explanation": {
+      "raw_explanation": "{\n  \"status\": \"ANOMALOUS\",\n  \"anomaly_type\": \"logical\",\n  \"issue\": \"extra nut\",\n  \"explanation\": \"the query image has an extra nut that is not present in the known-good images\"\n}",
+      "json_ok": true,
+      "status": "ANOMALOUS",
+      "anomaly_type": "logical",
+      "issue": "extra nut",
+      "explanation": "the query image has an extra nut that is not present in the known-good images",
+      "explain_latency_ms": 11291.211199999985,
+      "explain_tokens": 53
+    },
+    "comparison": {
+      "k": 1,
+      "retention": 1.0,
+      "score_llr": 1.155212500365451,
+      "threshold_llr": 1.3662022064672783,
+      "predicted": "NORMAL"
+    }
+  },
+  {
+    "story": "hurt by aggressive compression (k=4: 100% -> 25%)",
+    "sample_id": "pushpins/test/structural_anomalies/034",
+    "category": "pushpins",
+    "label": "structural_anomaly",
+    "k": 4,
+    "retention": 0.25,
+    "references": [
+      "pushpins/train/good/244",
+      "pushpins/train/good/135",
+      "pushpins/train/good/335",
+      "pushpins/train/good/366"
+    ],
+    "score_llr": 2.7643158128485084,
+    "threshold_llr": 2.803394497360568,
+    "predicted": "NORMAL",
+    "raw_answer": "ANOMALOUS",
+    "ttft_ms": 1717.5650999997742,
+    "latency_ms": 2185.08170000041,
+    "peak_allocated_mb": 3704.36962890625,
+    "peak_reserved_mb": 4078.0,
+    "explanation": null,
+    "comparison": {
+      "k": 4,
+      "retention": 1.0,
+      "score_llr": 3.686603522917722,
+      "threshold_llr": 3.1131368760601617,
+      "predicted": "ANOMALOUS"
+    }
+  }
+]

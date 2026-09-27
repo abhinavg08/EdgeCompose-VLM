@@ -1,0 +1,5 @@
+category,k,retention,status,error_message,peak_allocated_mb,peak_reserved_mb,context_overhead_mb,device_footprint_mb,latency_ms_median,ttft_ms_median,visual_tokens_before,visual_tokens_after,prefill_seq_len,max_pixels_tokens,attention_backend,device_total_mb,exceeds_vram
+pushpins,4,1.0,ok,,4349.9345703125,5210.0,1100.5,6310.5,4747.390349999998,4358.0655499999975,2465,2465,2642,512,eager,8187.5,False
+pushpins,8,1.0,over_vram,,6278.298828125,7920.0,1100.5,9020.5,11426.723799999998,10949.031950000002,4437,4437,4650,512,eager,8187.5,True
+pushpins,4,0.5,ok,,4071.4375,4840.0,1100.5,5940.5,3803.898899999989,3339.60364999999,2465,1230,1407,512,eager,8187.5,False
+pushpins,8,0.5,ok,,4248.0322265625,5640.0,1100.5,6740.5,6641.310400000005,6150.4978000000065,4437,2214,2427,512,eager,8187.5,False

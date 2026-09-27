@@ -1,0 +1,20 @@
+﻿$ python scripts/inspect_demo.py --category breakfast_box --references 8 --token-retention 0.75 --query <MVTec LOCO>/breakfast_box/test/logical_anomalies/009.png
+
+EdgeInspect-VLM
+Model:            Qwen2.5-VL-3B-Instruct-AWQ (INT4 LLM, bf16 vision tower, SDPA, tuned AWQ dispatch)
+Hardware:         NVIDIA GeForce RTX 4060 Laptop GPU (8188 MB)
+Category:         breakfast_box
+Reference count:  8  (train/good: 271, 248, 267, 219, 145, 149, 056, 028; seed 0)
+Token retention:  75%  (VisionZip per image; visual tokens 4500 -> 3375)
+Query:            hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/test/logical_anomalies/009.png
+Prediction:       ANOMALOUS
+Anomaly score:    +0.436  = log P(ANOMALOUS) - log P(NORMAL); normal-only calibrated threshold +0.319
+Raw model answer: 'ANOMALOUS'
+Anomaly type:     logical
+Issue:            extra nuts
+Explanation:      the right side of the tray has extra nuts that are not present in the other images
+                  (explanation pass 19872 ms, not included below)
+Performance (classification pass, measured):
+  TTFT:           5274 ms  (vision 2129 ms, prefill 2731 ms)
+  Latency:        5752 ms
+  Peak VRAM:      5475 MB allocated / 6348 MB reserved by the process
