@@ -20,7 +20,7 @@ AWQ, VisionZip, SDPA and FlashAttention are prior work (see [References](#refere
 | **Capacity → quality** | 1 → 8 references: **+0.08 to +0.13 AUROC** at every retention (paired CIs exclude 0); best VRAM-resident config (k = 8, 75%) **0.697 AUROC vs 0.605** for the best uncompressed config that fits (k = 4): **+0.092 [+0.026, +0.170]**. |
 | **Honest limits** | Absolute inspection quality is modest (mean AUROC ≤ 0.72; pushpins ≈ chance); the VLM's own NORMAL/ANOMALOUS answer is ~98% "ANOMALOUS" and unusable without likelihood scoring + normal-only calibration. |
 
-⟨EI:readme-seed-row⟩
+**Robustness:** a second, independent reference seed (k ∈ {1, 8} x 100/75/50%) reproduces the direction of every effect — k = 1 → 8 gains +0.04 to +0.08, 75% retention is free at k = 8 in both seeds (0.697 / 0.702) — but the reference gain at 75% is not significant for seed 1. Eager attention adds 0.2-0.5 GB and 61-94% latency without changing which configurations fit.
 
 ## Why it matters
 
@@ -116,7 +116,7 @@ Exact environment: `requirements-lock.txt`, `results/system_info.json`.
 pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorch.org/whl/cu118
 pip install transformers==4.57.1 accelerate==1.10.1 huggingface-hub hf_xet pyarrow pandas pillow pyyaml matplotlib nvidia-ml-py pytest
 pip install --no-deps autoawq==0.2.9 zstandard triton-windows==3.3.1.post21
-python scripts/system_check.py && python -m pytest tests -q          # 45 unit tests
+python scripts/system_check.py && python -m pytest tests -q          # 44 unit tests
 
 # EdgeCompose (VQA)
 python scripts/download_assets.py --repo Qwen/Qwen2.5-VL-3B-Instruct-AWQ
@@ -143,7 +143,34 @@ decision, workaround and failed approach.
 
 ## Demo
 
-⟨EI:readme-demo⟩
+```powershell
+python scripts/inspect_demo.py --category breakfast_box --references 8 --token-retention 0.75 --query <MVTec LOCO>/breakfast_box/test/logical_anomalies/009.png
+```
+Real saved run (`results/edgeinspect/demo_output.txt`; query chosen by a fixed rule, ground truth = logical anomaly):
+```text
+EdgeInspect-VLM
+Model:            Qwen2.5-VL-3B-Instruct-AWQ (INT4 LLM, bf16 vision tower, SDPA, tuned AWQ dispatch)
+Hardware:         NVIDIA GeForce RTX 4060 Laptop GPU (8188 MB)
+Reference count:  8  (train/good: 271, 248, 267, 219, 145, 149, 056, 028; seed 0)
+Token retention:  75%  (VisionZip per image; visual tokens 4500 -> 3375)
+Prediction:       ANOMALOUS
+Anomaly score:    +0.436  = log P(ANOMALOUS) - log P(NORMAL); normal-only calibrated threshold +0.319
+Anomaly type:     logical
+Issue:            extra nuts            (model-generated explanation, not verified)
+Performance (classification pass, measured):
+  TTFT:           5274 ms  (vision 2129 ms, prefill 2731 ms)
+  Latency:        5752 ms
+  Peak VRAM:      5475 MB allocated / 6348 MB reserved by the process
+```
+Inspection optimizer (real outputs: `results/edgeinspect/optimizer_examples.txt`):
+```text
+$ python scripts/optimize.py --task industrial_inspection --max-vram-mb 7000 --max-latency-ms 6000 --min-auroc 0.65
+RECOMMENDED: reference count 8 | token retention 25% | sdpa | expected AUROC 0.674 [95% CI 0.601-0.743]
+             median latency 3296 ms (TTFT 2900 ms) | peak VRAM 5742 MB | VRAM-resident
+$ python scripts/optimize.py --task industrial_inspection --max-vram-mb 7000 --max-latency-ms 2000 --min-auroc 0.80
+NO FEASIBLE CONFIGURATION (no measured configuration reaches AUROC 0.80; every rejection reason is listed)
+```
+Qualitative examples (real outputs, decision = normal-only threshold): `plots/edgeinspect/examples.png`.
 
 ## Main figures
 

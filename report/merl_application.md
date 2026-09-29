@@ -61,7 +61,7 @@ improves anomaly discrimination.
 > kernel dispatch (+17% TTFT) until re-tuned (−27.8% latency at 99.6% accuracy); for few-shot industrial
 > inspection, compression lifts the VRAM-resident reference count from 4 to 8-16 and raises AUROC
 > from 0.605 to 0.697.
-> `14,000 profiled VQA queries · 4,000 inspection queries · 45 unit tests · reproducible from one env file`
+> `14,000 profiled VQA queries · 5,500 measured inspection queries · 44 unit tests · reproducible from one env file`
 
 ## E. Interview preparation
 

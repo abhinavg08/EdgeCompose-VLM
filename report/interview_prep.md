@@ -61,7 +61,7 @@ prompts stop being VRAM-resident beyond 4 references; with 75/50/25% of tokens t
    log P(ANOMALOUS) − log P(NORMAL) by teacher forcing; threshold from 10 normal validation images
    (90th percentile); AUROC as the main metric. Memory: max VRAM-resident k = 4/8/12/16 at
    100/75/50/25% tokens; beyond that Windows pages to system RAM (k=12 at 100%: 104 s/query).
-   ⟨EI:5min-results⟩
+   Results (200 queries per configuration, seed 0): mean AUROC 0.58-0.61 at k=1 and 0.66-0.72 at k=8; k = 1 → 8 gains +0.08 to +0.13 at every retention (paired CIs exclude 0); compression at k ≤ 4 has no detectable effect; k=8 at 75% (resident, 7.6 GB, 5.4 s) reaches 0.697 vs 0.605 for k=4 at 100% (+0.092 [+0.026, +0.170]); structural ≈ logical; breakfast box up to 0.87, pushpins ≈ chance. A second reference seed reproduces the directions (k=8/75%: 0.702) but the k-gain at 75% is not significant there. Eager attention: +0.2-0.5 GB, +61-94% latency, no change in residency at the probed points.
 7. **Limits.** One GPU/OS, one model, 500/200 queries, 1-2 reference seeds, prompt dependence, no
    localization, no factory data.
 
