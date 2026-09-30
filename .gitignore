@@ -1,15 +1,62 @@
 # large downloaded assets (re-created by scripts/download_assets.py + prepare_data.py)
 hf_assets/
 data/images/
+data/raw/
+datasets/
+mvtec_loco/
+mvtec_loco_anomaly_detection/
+models/
+checkpoints/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.zip
+*.tar
+*.tar.gz
+*.tar.xz
+*.tgz
+*.gz
+*.xz
+.cache/
+.huggingface/
+huggingface_cache/
+hf_cache/
 
 # python
 __pycache__/
 *.pyc
 .pytest_cache/
 .ipynb_checkpoints/
+.venv/
+venv/
+env/
+envs/
+.conda/
+*.egg-info/
+build/
+dist/
+
+# credentials and private configuration
+.env
+.env.*
+!.env.example
+credentials*
+*token*.txt
+*token*.json
+*.pem
+*.key
+id_rsa*
+id_ed25519*
 
 # logs that are regenerated each run
 results/logs/
+*.log
+tmp/
+temp/
+scratch/
 
 # OS / editor
 .DS_Store

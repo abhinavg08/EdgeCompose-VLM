@@ -21,7 +21,7 @@ discrimination: going from 1 to 8 references raises mean AUROC by +0.08 to +0.13
 retention level (paired bootstrap CIs exclude zero), while compression at a fixed reference
 count has no detectable effect for k ≤ 4. The best VRAM-resident configuration, 8 references at
 75% retention, reaches a mean AUROC of 0.697 [0.624, 0.769] versus 0.605 for the best
-uncompressed configuration that fits (k = 4; paired difference +0.092 [+0.026, +0.170]). A second,
+uncompressed configuration that fits (k = 4; paired difference +0.093 [+0.026, +0.170]). A second,
 independent reference seed reproduces the direction of these effects (with a smaller, non-significant
 reference gain at 75%) and gives 0.702 for k = 8 at 75%.
 Absolute performance remains modest — pushpins stays near chance, and the model's own
@@ -221,7 +221,7 @@ SHA-256 checksums in `results/edgeinspect/raw/archive_final_grid_seed0_2026-10-0
 | compression at k = 8: 100% → 75% | −0.026 | [−0.070, +0.018] |
 | compression at k = 8: 100% → 50% | −0.067 | [−0.132, −0.002] |
 | compression at k = 8: 100% → 25% | −0.049 | [−0.123, +0.024] |
-| **k = 4 at 100% (best full-token resident) → k = 8 at 75% (resident)** | **+0.092** | **[+0.026, +0.170]** |
+| **k = 4 at 100% (best full-token resident) → k = 8 at 75% (resident)** | **+0.093** | **[+0.026, +0.170]** |
 | k = 4 at 100% → k = 8 at 50% | +0.051 | [−0.024, +0.127] |
 | k = 4 at 100% → k = 8 at 25% | +0.070 | [−0.017, +0.154] |
 
@@ -365,7 +365,7 @@ spills; k = 8 at 75% needs 7,565 MB and stays resident. Beyond the limit, latenc
 two orders of magnitude (k = 12 at 100%: 104 s per query vs 5.6 s for k = 12 at 50%).
 **Capacity translates into quality:** the best resident configuration without compression is
 k = 4 at 100% (AUROC 0.605); with 75% retention k = 8 becomes resident and reaches 0.697 — a
-paired improvement of +0.092 [+0.026, +0.170]. At 50% and 25% the improvement over k = 4 / 100%
+paired improvement of +0.093 [+0.026, +0.170]. At 50% and 25% the improvement over k = 4 / 100%
 is +0.05 to +0.07 but not significant.
 **I.** Memory, not model size, is the binding constraint for multi-image inspection on this
 card: the quantized weights occupy 3.3 GB; the remainder is consumed by per-image vision-encoder
@@ -449,7 +449,7 @@ configuration therefore spends the savings on more references rather than on spe
   (category, k, retention), so realized specificity varied from 0.78 to 0.92 around the 0.90 target.
 * **No localization evaluation**; Stage-B explanations are qualitative only and can be wrong.
 * **No factory deployment**; MVTec LOCO images are clean and aligned.
-* **Dataset licence**: CC BY-NC-SA 4.0 — the dataset is not redistributed with the code.
+* **Dataset licence**: CC BY-NC-SA 4.0 — the full dataset is not bundled. Selected images in the qualitative montage retain this license; see [image attribution](../plots/edgeinspect/examples.LICENSE.md).
 
 ## 9. Conclusion
 

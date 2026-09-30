@@ -17,7 +17,7 @@ AWQ, VisionZip, SDPA and FlashAttention are prior work (see [References](#refere
 | **Bottleneck shift** | After pruning, the vision encoder dominates (37% → 53% of latency); decode ≈64 ms/token everywhere. |
 | **Numerical failure found & fixed** | fp16 overflow in the last ViT block broke 3.2% of TextVQA answers; bf16 vision tower → 16 failures to 0. |
 | **Reference capacity on 8 GB** | Max VRAM-resident known-good references: **4 at 100% tokens → 8 / 12 / 16 at 75 / 50 / 25%**. |
-| **Capacity → quality** | 1 → 8 references: **+0.08 to +0.13 AUROC** at every retention (paired CIs exclude 0); best VRAM-resident config (k = 8, 75%) **0.697 AUROC vs 0.605** for the best uncompressed config that fits (k = 4): **+0.092 [+0.026, +0.170]**. |
+| **Capacity → quality** | 1 → 8 references: **+0.08 to +0.13 AUROC** at every retention (paired CIs exclude 0); best VRAM-resident config (k = 8, 75%) **0.697 AUROC vs 0.605** for the best uncompressed config that fits (k = 4): **+0.093 [+0.026, +0.170]** (unrounded difference 0.0925). |
 | **Honest limits** | Absolute inspection quality is modest (mean AUROC ≤ 0.72; pushpins ≈ chance); the VLM's own NORMAL/ANOMALOUS answer is ~98% "ANOMALOUS" and unusable without likelihood scoring + normal-only calibration. |
 
 **Robustness:** a second, independent reference seed (k ∈ {1, 8} x 100/75/50%) reproduces the direction of every effect — k = 1 → 8 gains +0.04 to +0.08, 75% retention is free at k = 8 in both seeds (0.697 / 0.702) — but the reference gain at 75% is not significant for seed 1. Eager attention adds 0.2-0.5 GB and 61-94% latency without changing which configurations fit.
@@ -32,6 +32,17 @@ configuration into a 28% faster one, and — for inspection — turned an 8 GB l
 images into 8-16, which measurably improves few-shot anomaly discrimination.
 
 ## Architecture
+
+<p align="center">
+  <img src="plots/architecture.svg" width="1200" alt="EdgeCompose and EdgeInspect share preprocessing, a bf16 vision encoder, per-image VisionZip compression, and AWQ INT4 prefill; VQA decoding and likelihood-based inspection feed measured analysis and deployment selection." />
+</p>
+
+Both tasks share the same instrumented runner. Compression acts on each image before
+language-model prefill; inspection uses exact answer-likelihood scoring and a normal-only
+threshold. The deployment selector chooses among measured configurations.
+
+<details>
+<summary>Editable Mermaid diagram</summary>
 
 ```mermaid
 flowchart LR
@@ -55,6 +66,8 @@ flowchart LR
     L --> A["analysis: bootstrap CIs, interaction I = R_AB - R_A R_B,<br/>Pareto, residency (resident / spill / OOM)"]
     A --> O["optimize.py<br/>constraint-based selector over measured configs"]
 ```
+
+</details>
 
 ## EdgeCompose findings (single-image VQA, 14 configs x 500 TextVQA + 500 POPE = 14,000 queries)
 
@@ -111,22 +124,34 @@ Exact environment: `requirements-lock.txt`, `results/system_info.json`.
 
 ## Reproduction
 
+Run commands from the repository root in a Python 3.9 environment. The measured setup is
+Windows 11 with the CUDA 11.8 PyTorch build; other platforms or dependency combinations are
+not validated. `requirements.txt` lists direct dependencies; `requirements-lock.txt` is a
+sanitized snapshot of the full research environment, including unrelated packages, rather
+than a portable install recipe.
+
 ```powershell
+# create and activate an isolated environment (Python 3.9 must already be installed)
+py -3.9 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
 # environment (torch first, from the CUDA index; AutoAWQ without deps so torch is not replaced)
 pip install torch==2.7.1 torchvision==0.22.1 --index-url https://download.pytorch.org/whl/cu118
-pip install transformers==4.57.1 accelerate==1.10.1 huggingface-hub hf_xet pyarrow pandas pillow pyyaml matplotlib nvidia-ml-py pytest
+pip install transformers==4.57.1 accelerate==1.10.1 huggingface-hub==0.36.0 hf_xet numpy==2.0.2 datasets pyarrow pandas pillow pyyaml matplotlib nvidia-ml-py pytest
 pip install --no-deps autoawq==0.2.9 zstandard triton-windows==3.3.1.post21
-python scripts/system_check.py && python -m pytest tests -q          # 44 unit tests
+python scripts/system_check.py
+python -m pytest tests -q          # 44 unit tests
 
 # EdgeCompose (VQA)
 python scripts/download_assets.py --repo Qwen/Qwen2.5-VL-3B-Instruct-AWQ
 python scripts/prepare_data.py --n 200 1000
 python scripts/smoke_test.py
 python scripts/awq_kernel_bench.py
-python scripts/run_sweep.py --sweep sweep_final.yaml --n 1000 --limit 500   # 14 configs, ~4.5 h (reported run: --vision-dtype float16, see erratum)
+python scripts/run_sweep.py --sweep sweep_final.yaml --n 1000 --limit 500   # 14 configs, ~4.5 h; current bf16 vision default
 python scripts/analyze.py --n 500 --main
 
-# EdgeInspect (MVTec LOCO AD; download the archive from MVTec, CC BY-NC-SA 4.0)
+# EdgeInspect: obtain mvtec_loco_anomaly_detection.tar.xz from MVTec (CC BY-NC-SA 4.0)
+# and place it in hf_assets/mvtec_loco/ before the preparation command below.
 python scripts/prepare_loco.py --final-per-label 20 10 10
 python scripts/run_edgeinspect_sweep.py --steps memory grid seeds memory_eager    # ~6 h
 python scripts/analyze_edgeinspect.py --tag final --main
@@ -141,10 +166,22 @@ Runs are resumable, every query is logged (`results/raw/`, `results/edgeinspect/
 EdgeInspect grid is archived read-only with SHA-256 checksums. `PROJECT_STATUS.md` records every
 decision, workaround and failed approach.
 
+The project applies the AutoAWQ `PytorchGELUTanh` compatibility alias and sets
+`MKL_THREADING_LAYER=SEQUENTIAL` before NumPy imports; no site-packages edits are required.
+The language model uses fp16 activations, while the vision tower defaults to bf16 to avoid
+the documented overflow. EdgeInspect releases the CUDA allocator cache per query to prevent
+growth during long sweeps. FlashAttention is not required for the measured SDPA/eager setup.
+Saved result files are included for analysis without downloading the model or datasets.
+Existing result logs are resumed and completed rows skipped. To remeasure, use a separate
+result tag or output directory and keep the published logs intact. The original EdgeCompose
+sweep used an fp16 vision tower; `--vision-dtype float16` is available on `scripts/benchmark.py`
+(not on the sweep wrapper) for reproducing that historical setting. The current bf16 default
+addresses the erratum and is not a bit-for-bit re-run of the published fp16 sweep.
+
 ## Demo
 
 ```powershell
-python scripts/inspect_demo.py --category breakfast_box --references 8 --token-retention 0.75 --query <MVTec LOCO>/breakfast_box/test/logical_anomalies/009.png
+python scripts/inspect_demo.py --category breakfast_box --references 8 --token-retention 0.75 --query "hf_assets/mvtec_loco/mvtec_loco_anomaly_detection/breakfast_box/test/logical_anomalies/009.png"
 ```
 Real saved run (`results/edgeinspect/demo_output.txt`; query chosen by a fixed rule, ground truth = logical anomaly):
 ```text
@@ -171,6 +208,8 @@ $ python scripts/optimize.py --task industrial_inspection --max-vram-mb 7000 --m
 NO FEASIBLE CONFIGURATION (no measured configuration reaches AUROC 0.80; every rejection reason is listed)
 ```
 Qualitative examples (real outputs, decision = normal-only threshold): `plots/edgeinspect/examples.png`.
+This selected montage adapts MVTec LOCO AD images and is distributed under CC BY-NC-SA 4.0;
+see [image attribution and license](plots/edgeinspect/examples.LICENSE.md).
 
 ## Main figures
 
@@ -192,7 +231,8 @@ All figures: `plots/` (EdgeCompose, 10) and `plots/edgeinspect/` (EdgeInspect, 6
   reference seed; per-category inspection results are noisy.
 * EdgeInspect uses a fixed, untuned prompt and ≤ 512 visual tokens per image; the VLM's answers are
   biased and its likelihood score is uncalibrated (threshold from 10 normal images); no localization;
-  no factory data; MVTec LOCO AD is CC BY-NC-SA 4.0 and is not redistributed.
+  no factory data; MVTec LOCO AD is CC BY-NC-SA 4.0. The full dataset is not bundled;
+  selected images appear only in the attributed qualitative montage.
 * The reported EdgeCompose sweep ran the vision tower in fp16 (3.2% TextVQA overflow); corrected
   numbers are given on overflow-free samples, not from a full re-run.
 
@@ -210,3 +250,10 @@ All figures: `plots/` (EdgeCompose, 10) and `plots/edgeinspect/` (EdgeInspect, 6
 * FlashAttention (Dao et al.); PyTorch `scaled_dot_product_attention`.
 * TextVQA (Singh et al., CVPR 2019); POPE (Li et al., EMNLP 2023) — lmms-lab releases.
 * MVTec LOCO AD (Bergmann et al., IJCV 2022), CC BY-NC-SA 4.0.
+
+## Licensing and attribution
+
+The repository has no overall project license. Adapted third-party code retains its upstream
+terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and `third_party/`.
+The downloaded 3B AWQ checkpoint uses the **Qwen Research License Agreement**, which must be
+reviewed separately; model weights and the full datasets are excluded from Git.

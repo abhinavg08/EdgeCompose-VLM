@@ -106,7 +106,7 @@ def collect_system_info() -> Dict[str, Any]:
     """Collect hardware/software provenance for results/system_info.json."""
     info: Dict[str, Any] = {
         "python": sys.version.split()[0],
-        "python_executable": sys.executable,
+        "python_executable": Path(sys.executable).name,
         "platform": platform.platform(),
         "processor": platform.processor(),
     }

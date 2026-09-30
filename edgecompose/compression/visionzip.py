@@ -30,6 +30,11 @@ target token's slot and every surviving slot keeps its original M-RoPE position.
 positions continue from the (unchanged) maximum position, i.e. identical to the
 uncompressed model, rather than being shifted by the number of removed tokens.
 """
+# Adapted from VisionZip's Qwen2.5-VL implementation (Apache-2.0).
+# Copyright 2025 Senqiao Yang.
+# Copyright 2025 The Qwen Team and The HuggingFace Inc. team. All rights reserved.
+# Modified for EdgeCompose: isolated compressor, original M-RoPE positions, and
+# per-image attention segments. See THIRD_PARTY_NOTICES.md and third_party/APACHE-2.0.txt.
 from __future__ import annotations
 
 from typing import Optional

@@ -20,7 +20,7 @@ measured-data deployment optimizer.
   settings across 14 configurations and 14,000 CUDA-synchronized TextVQA/POPE queries with
   stage-wise (vision/prefill/decode) latency, VRAM and energy profiling.
 
-• Found that AutoAWQ's fixed kernel-dispatch threshold made 75%-token pruning 17% *slower* in
+• Found that AutoAWQ's fixed kernel-dispatch threshold made 75% token retention 17% *slower* in
   time-to-first-token; re-tuning it to the microbenchmarked crossover and composing it with
   VisionZip reduced end-to-end latency by 27.8% (TextVQA) and 38.7% (POPE) while retaining
   99.6% and 100.2% of baseline benchmark quality, and cut GPU energy per query by 27%.

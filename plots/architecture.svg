@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1180" viewBox="0 0 1200 1180" role="img" aria-labelledby="title description">
+  <title id="title">EdgeCompose-VLM and EdgeInspect-VLM architecture</title>
+  <desc id="description">Single-image VQA and few-shot industrial inspection share an instrumented Qwen2.5-VL-3B-AWQ runner. Images and instructions pass through preprocessing, a bf16 vision encoder with SDPA or eager attention, per-image VisionZip token compression, and AWQ INT4 language-model prefill. VQA uses greedy decoding with a KV cache. Inspection uses exact NORMAL and ANOMALOUS answer likelihoods and a normal-only threshold. Per-query logs feed bootstrap, Pareto, and residency analysis, followed by deployment selection over measured configurations.</desc>
+  <defs>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101c32"/>
+      <stop offset="1" stop-color="#253653"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#8592a8" stroke-width="1.7" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', Arial, sans-serif; }
+      .title { font-size: 34px; font-weight: 700; fill: #ffffff; }
+      .heading { font-size: 27px; font-weight: 700; fill: #192b45; }
+      .body { font-size: 23px; fill: #52627a; }
+      .small { font-size: 20px; fill: #52627a; }
+      .label { font-size: 18px; font-weight: 700; letter-spacing: 1.4px; }
+      .flow { fill: none; stroke: #8592a8; stroke-width: 2.5; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <rect x="1" y="1" width="1198" height="1178" rx="24" fill="#f5f8fc" stroke="#d6e0ed" stroke-width="2"/>
+  <path d="M25 2 H1175 Q1198 2 1198 25 V133 H2 V25 Q2 2 25 2 Z" fill="url(#header)"/>
+  <text x="52" y="57" class="title">EdgeCompose-VLM + EdgeInspect-VLM</text>
+  <text x="52" y="97" font-size="23" fill="#c7d4e6">Two tasks. One instrumented inference pipeline.</text>
+  <rect x="906" y="77" width="240" height="32" rx="16" fill="#344762"/>
+  <text x="1026" y="99" text-anchor="middle" font-size="18" font-weight="600" fill="#e2ebf7">RTX 4060 · 8 GB · batch 1</text>
+
+  <!-- Task inputs: distinct colors are reused at their respective outputs. -->
+  <rect x="52" y="163" width="526" height="125" rx="16" fill="#eaf8fc" stroke="#b6e2ec" stroke-width="1.5"/>
+  <rect x="52" y="183" width="5" height="85" rx="2" fill="#087f99"/>
+  <text x="78" y="192" class="label" fill="#087f99">EDGECOMPOSE · SINGLE-IMAGE VQA</text>
+  <text x="78" y="228" class="heading">Query image + question</text>
+  <text x="78" y="262" class="body">TextVQA / POPE</text>
+
+  <rect x="622" y="163" width="526" height="125" rx="16" fill="#fff5e9" stroke="#f0d4ad" stroke-width="1.5"/>
+  <rect x="622" y="183" width="5" height="85" rx="2" fill="#b76516"/>
+  <text x="648" y="192" class="label" fill="#a45610">EDGEINSPECT · FEW-SHOT INSPECTION</text>
+  <text x="648" y="228" class="heading">k known-good references + query</text>
+  <text x="648" y="262" class="body">MVTec LOCO AD + inspection instruction</text>
+
+  <path d="M315 288 V309 H885 V288 M600 309 V330" class="flow" marker-end="url(#arrow)"/>
+
+  <!-- The four measured stages use a vertical layout to retain readable labels. -->
+  <rect x="52" y="338" width="1096" height="455" rx="18" fill="#ffffff" stroke="#ccd8e8" stroke-width="1.5"/>
+  <text x="78" y="369" class="label" fill="#67778f">SHARED RUNNER</text>
+  <text x="1120" y="369" text-anchor="end" font-size="20" font-weight="600" fill="#536a91">Qwen2.5-VL-3B-AWQ</text>
+
+  <rect x="78" y="390" width="1044" height="72" rx="12" fill="#f5f7fc" stroke="#dee5f0"/>
+  <circle cx="116" cy="426" r="21" fill="#e1e8f5"/>
+  <text x="116" y="434" text-anchor="middle" font-size="22" font-weight="700" fill="#516786">1</text>
+  <text x="158" y="421" class="heading">Preprocess</text>
+  <text x="158" y="449" class="small">Chat template · image resize / patchify · transfer to GPU</text>
+  <g transform="translate(1020 405)" fill="none" stroke="#8b9bb4" stroke-width="2">
+    <rect width="42" height="42" rx="7"/><path d="M8 32 L17 22 L23 28 L31 17 L36 24"/><circle cx="13" cy="12" r="3"/>
+  </g>
+  <path d="M600 462 V477" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="78" y="482" width="1044" height="72" rx="12" fill="#f5f7fc" stroke="#dee5f0"/>
+  <circle cx="116" cy="518" r="21" fill="#e1e8f5"/>
+  <text x="116" y="526" text-anchor="middle" font-size="22" font-weight="700" fill="#516786">2</text>
+  <text x="158" y="513" class="heading">Vision encoder</text>
+  <text x="158" y="541" class="small">bf16 vision tower · SDPA or eager attention</text>
+  <g transform="translate(1020 500)" fill="#a0afc8">
+    <rect width="10" height="10" rx="2"/><rect x="15" width="10" height="10" rx="2"/><rect x="30" width="10" height="10" rx="2"/>
+    <rect y="15" width="10" height="10" rx="2"/><rect x="15" y="15" width="10" height="10" rx="2"/><rect x="30" y="15" width="10" height="10" rx="2"/>
+    <rect y="30" width="10" height="10" rx="2"/><rect x="15" y="30" width="10" height="10" rx="2"/><rect x="30" y="30" width="10" height="10" rx="2"/>
+  </g>
+  <path d="M600 554 V569" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="78" y="574" width="1044" height="72" rx="12" fill="#f1efff" stroke="#c9c4ef"/>
+  <circle cx="116" cy="610" r="21" fill="#dcd7fb"/>
+  <text x="116" y="618" text-anchor="middle" font-size="22" font-weight="700" fill="#6252b1">3</text>
+  <text x="158" y="605" class="heading">VisionZip token compression</text>
+  <text x="158" y="633" class="small">Applied per image · 100 / 75 / 50 / 25% token retention</text>
+  <g transform="translate(1020 592)" fill="#9183ce">
+    <rect width="10" height="10" rx="2"/><rect x="30" width="10" height="10" rx="2"/>
+    <rect x="15" y="15" width="10" height="10" rx="2"/>
+    <rect y="30" width="10" height="10" rx="2"/><rect x="30" y="30" width="10" height="10" rx="2"/>
+  </g>
+  <path d="M600 646 V661" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="78" y="666" width="1044" height="72" rx="12" fill="#eef3fc" stroke="#cbd8ed"/>
+  <circle cx="116" cy="702" r="21" fill="#d9e4f6"/>
+  <text x="116" y="710" text-anchor="middle" font-size="22" font-weight="700" fill="#496993">4</text>
+  <text x="158" y="697" class="heading">Language-model prefill</text>
+  <text x="158" y="725" class="small">AWQ INT4 · tuned GEMM dispatch · fused image and text embeddings</text>
+  <g transform="translate(1020 683)" fill="none" stroke="#8199bd" stroke-width="2">
+    <rect x="7" y="7" width="28" height="28" rx="5"/>
+    <path d="M14 1 V7 M28 1 V7 M14 35 V41 M28 35 V41 M1 14 H7 M1 28 H7 M35 14 H41 M35 28 H41"/>
+  </g>
+  <text x="600" y="771" text-anchor="middle" font-size="20" font-weight="600" fill="#596e8b">Stage profiling: TTFT · end-to-end latency · VRAM · GPU energy</text>
+
+  <path d="M600 793 V812 H315 V831 M600 812 H885 V831" class="flow" marker-end="url(#arrow)"/>
+  <path d="M315 812 V831" class="flow" marker-end="url(#arrow)"/>
+  <rect x="52" y="842" width="526" height="139" rx="16" fill="#eaf8fc" stroke="#b6e2ec" stroke-width="1.5"/>
+  <text x="78" y="873" class="label" fill="#087f99">VQA ANSWER</text>
+  <text x="78" y="910" class="heading">Greedy decoding + KV cache</text>
+  <text x="78" y="944" class="body">Answer quality + system performance</text>
+
+  <rect x="622" y="842" width="526" height="139" rx="16" fill="#fff5e9" stroke="#f0d4ad" stroke-width="1.5"/>
+  <text x="648" y="873" class="label" fill="#a45610">INSPECTION DECISION</text>
+  <text x="648" y="910" font-size="26" font-weight="700" fill="#192b45">Exact answer-likelihood scoring</text>
+  <text x="648" y="942" class="small">log P(ANOMALOUS) − log P(NORMAL)</text>
+  <text x="648" y="968" font-size="18" fill="#6e5c49">Normal-only threshold · score timing logged separately</text>
+
+  <path d="M315 981 V1003 H885 V981 M600 1003 V1027" class="flow" marker-end="url(#arrow)"/>
+
+  <!-- Analysis and selection are based on recorded measurements, not predictions. -->
+  <rect x="52" y="1038" width="1096" height="105" rx="16" fill="#17283f"/>
+  <text x="78" y="1075" font-size="25" font-weight="700" fill="#ffffff">Per-query logs</text>
+  <text x="78" y="1106" font-size="19" fill="#c4d2e5">JSONL + measured stages</text>
+  <path d="M370 1090 H402" stroke="#a8bad1" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="430" y="1075" font-size="25" font-weight="700" fill="#ffffff">Measured analysis</text>
+  <text x="430" y="1106" font-size="19" fill="#c4d2e5">Bootstrap CIs · Pareto · residency</text>
+  <path d="M755 1090 H787" stroke="#a8bad1" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="816" y="1075" font-size="25" font-weight="700" fill="#ffffff">Deployment selector</text>
+  <text x="816" y="1106" font-size="19" fill="#c4d2e5">Quality · latency · VRAM limits</text>
+</svg>

@@ -21,7 +21,7 @@ and does saved compute/memory translate into better application capability?
 ### Main systems finding
 * Optimizations **do not simply multiply**. SDPA (vision encoder, −40%) and VisionZip (prefill) act
   on different stages and add; VisionZip interacts with the quantized-kernel path.
-* AutoAWQ's fixed 1024-token dispatch made 75%-token pruning **17% slower in TTFT**; the fused kernel
+* AutoAWQ's fixed 1024-token dispatch made 75% token retention **17% slower in TTFT**; the fused kernel
   is 2.6x slower than dequantize + cuBLAS at ~1000 rows on this GPU. Re-tuning the threshold to the
   measured crossover (64 rows) + VisionZip-75%: **−27.8% latency, 99.6% of TextVQA accuracy, −27%
   energy**; POPE (VisionZip-50%): −38.7% latency at 100.2% accuracy.
@@ -34,7 +34,7 @@ and does saved compute/memory translate into better application capability?
 ### Application result
 * Max VRAM-resident reference count on 8 GB: **4 at 100% tokens → 8 / 12 / 16 at 75 / 50 / 25%**.
 * More references improve discrimination: 1 → 8 references raise mean AUROC by **+0.08 to +0.13** at every retention level (paired 95% CIs exclude 0); compression at a fixed k ≤ 4 has no detectable cost; structural and logical anomalies behave alike.
-* **8 references at 75% tokens** (VRAM-resident, 7.6 GB, 5.4 s/query): mean AUROC **0.697** [0.624, 0.769] vs **0.605** for the best uncompressed configuration that fits (k = 4) — paired **+0.092 [+0.026, +0.170]**. Absolute quality is modest (pushpins ≈ chance; the model's own answer is ~98% "ANOMALOUS"), so this is a research prototype, not a deployable inspector.
+* **8 references at 75% tokens** (VRAM-resident, 7.6 GB, 5.4 s/query): mean AUROC **0.697** [0.624, 0.769] vs **0.605** for the best uncompressed configuration that fits (k = 4) — paired **+0.093 [+0.026, +0.170]**. Absolute quality is modest (pushpins ≈ chance; the model's own answer is ~98% "ANOMALOUS"), so this is a research prototype, not a deployable inspector.
 
 ### Why relevant to CI0213
 *(align this paragraph with the posting's exact wording)* The project is about making multimodal

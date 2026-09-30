@@ -1,4 +1,5 @@
-﻿# Exact package set of the environment used for all reported results
+# Local build URLs replaced with installed package versions for publication.
+# Exact package set of the environment used for all reported results
 # (Python 3.9.24, Windows 11, CUDA 11.8 torch build)
 # generated: 2026-09-30T15:09:24
 absl-py==2.3.1

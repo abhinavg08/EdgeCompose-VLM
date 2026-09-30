@@ -13,6 +13,10 @@ function's forward with an identical copy whose threshold is configurable
 (`set_dequant_threshold`). With the default (1024) behaviour is byte-for-byte upstream.
 This is a kernel-selection setting of existing kernels, not a new kernel.
 """
+# Adapted from AutoAWQ awq/modules/linear/gemm.py (MIT License).
+# Copyright (c) 2023 MIT HAN Lab.
+# Modified for EdgeCompose: configurable GEMM dispatch threshold.
+# Full upstream license: third_party/AutoAWQ-MIT.txt.
 from __future__ import annotations
 
 import logging
